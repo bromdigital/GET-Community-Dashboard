@@ -1,0 +1,58 @@
+<%- include ("../partials/header") %>
+    <!-- Page Title
+		============================================= -->
+    <section id="page-title" class="page-title-mini">
+
+        <div class="container clearfix">
+            <h1>Recent Events</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Recent Events</li>
+            </ol>
+        </div>
+
+    </section>
+    <!-- #page-title end -->
+
+    <section id="content">
+
+        <div class="content-wrap nobottompadding">
+
+            <!-- Portfolio Items
+            ============================================= -->
+            <div id="portfolio" class="portfolio grid-container clearfix">
+                <% for(var i = 0; i < locals.newEvents.length ; i++) {%>
+
+                    <article class="portfolio-item tile">
+                        <div class="portfolio-image">
+                            <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
+                                <div class="imgTile" style="background-image: url(<%= locals.newEvents[i].event.imageUrl %>);">
+                                </a>
+                        </div>
+                        <div class="portfolio-desc">
+                            <h3>
+                                <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
+                                    <%= locals.newEvents[i].event.eventName %>
+                                </a>
+                            </h3>
+                            <span><%= locals.newEvents[i].event.ticketeerName.substring(0, 8) %></span>
+                        </div>
+                    </article>
+                    <% } %>
+
+            </div>
+            <!-- #portfolio end -->
+
+        </div>
+
+    </section>
+    <!-- #content end -->
+
+    <script>
+        function imgError(image) {
+            image.onerror = "";
+            image.src = "../img/img-404.png";
+            return true;
+        }
+    </script>
+    <%- include ("../partials/footer") %>

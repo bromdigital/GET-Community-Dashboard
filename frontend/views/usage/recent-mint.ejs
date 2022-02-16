@@ -1,0 +1,110 @@
+<%- include ("../partials/header") %>
+    <section id="page-title" class="page-title-mini">
+
+        <div class="container clearfix">
+            <h1><strong>GET used today (UTC):</strong>
+                <%= Number(locals.todayGET).toFixed(6)%>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Recently minted</li>
+            </ol>
+        </div>
+
+    </section>
+    <!-- #page-title end -->
+    <section id="content">
+
+        <div class="content-wrap">
+
+            <div class="container clearfix">
+                <div class="col_full nobottommargin">
+
+                    <h4>newest 4 mints</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">$GET used</th>
+                                    <th scope="col">Image URL</th>
+                                    <th scope="col">Event Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <% for(var i = 0; i < locals.firstFour.length ; i++) {%>
+
+                                    <tr>
+                                        <td>
+                                            <%= locals.firstFour[i].blockTimestamp %>
+                                        </td>
+                                        <td>
+                                            <%= Number(locals.firstFour[i].getDebitedFromSilo).toFixed(6) %>
+                                        </td>
+                                        <td>
+                                            <%= locals.firstFour[i].event.imageUrl %>
+                                        </td>
+                                        <td>
+                                            <%= locals.firstFour[i].event.eventName %>
+
+                                        </td>
+                                    </tr>
+                                    <% } %>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="col_full nobottommargin">
+
+                    <h4>more mints</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ticket Number</th>
+                                    <th scope="col">Event Name</th>
+                                    <th scope="col">$GET used</th>
+                                    <th scope="col">Mint date & time</th>
+                                    <th scope="col">NFT Explorer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <% for(var i = 0; i < locals.recentMinted.length ; i++) {%>
+                                    <tr>
+                                        <td>
+                                            <%= locals.recentMinted[i].nftIndex %>
+                                        </td>
+                                        <td>
+                                            <a href="../event-profile/<%= locals.recentMinted[i].event.id %>">
+                                                <%= locals.recentMinted[i].event.eventName %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <%= locals.recentMinted[i].getDebitedFromSilo %>
+                                        </td>
+                                        <td>
+                                            <%= locals.recentMinted[i].blockTimestamp %>
+                                        </td>
+                                        <td>
+                                            <a href="https://explorer.get-protocol.io/ticket/<%= locals.recentMinted[i].nftIndex %>" target="_blank">View Ticket</a>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- /.content -->
+        <%- include ("../partials/footer") %>

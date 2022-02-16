@@ -1,0 +1,40 @@
+<%- include ("partials/header") %>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div class="info-box-content">
+            <div class="col-lg-12" style="padding: 30px;">
+                <div class="text-left">
+                    <h2>Global Map of GET fueled events</h2>
+                    <h6>Please note the data shown on this map contains only events that have provided their lat/long information. Work in progress with data from <a href="https://thegraph.com/hosted-service/subgraph/getprotocol/get-protocol-subgraph" target="_blank">thegraph.com</a></h6>
+                </div>
+            </div>
+        </div>
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div id="map" style="padding: 10px; margin: 20px;"></div>
+        </div>
+
+    </div>
+
+    <script>
+        var map = L.map('map', {
+            center: [32.0, -26.0],
+            minZoom: 3,
+            zoom: 3
+        });
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            subdomains: ['a', 'b', 'c']
+        }).addTo(map);
+
+        markers = <%- JSON.stringify(locals.markers) %>
+
+        for (var i = 0; i < markers.length; ++i) {
+            L.marker([markers[i].lat, markers[i].lng])
+                .bindPopup('<a href="event-profile/' + markers[i].id + '" rel="noopener"><img src="' + markers[i].imgURL + '" alt="' + markers[i].name + '" width="100%" ><p>' + markers[i].name + '<br/> by ' + markers[i].tickeer + '</p></a>')
+                .addTo(map);
+        }
+    </script>
+    <!-- /.content-wrapper -->
+    <%- include ("partials/footer") %>

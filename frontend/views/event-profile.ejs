@@ -1,0 +1,125 @@
+<%- include ("partials/header") %>
+    <!-- Page Title
+		============================================= -->
+    <section id="page-title">
+
+        <div class="container clearfix">
+            <h1>
+                <%= locals.thisEvent.eventName%><br/>
+                    <strong><%= locals.thisEvent.ticketeerName%></strong></h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item">Events</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <%= locals.thisEvent.ticketeerName%>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <%= locals.thisEvent.eventName%>
+                </li>
+            </ol>
+        </div>
+
+    </section>
+    <!-- #page-title end -->
+
+    <!-- Content
+		============================================= -->
+    <section id="content">
+
+        <div class="content-wrap">
+
+            <div class="container clearfix">
+
+                <div class="single-event">
+
+                    <div class="col_three_fourth">
+                        <div class="entry-image nobottommargin">
+                            <a href="<%= locals.thisEvent.shopUrl %>" target="_blank"><img src="<%= locals.thisEvent.imageUrl %>" alt="<%= locals.thisEvent.ticketeerName%>"></a>
+                        </div>
+                    </div>
+                    <div class="col_one_fourth col_last">
+                        <div class="card events-meta mb-3">
+                            <div class="card-header">
+                                <h5 class="mb-0">Token Info:</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="iconlist nobottommargin">
+                                    <li><strong>GET used</strong></li>
+                                    <li>32894398239438 ($234.234)</li>
+                                    <li><strong>Mint count</strong></li>
+                                    <li>99678</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card events-meta mb-3">
+                            <div class="card-header">
+                                <h5 class="mb-0">Event Info:</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="iconlist nobottommargin">
+                                    <li><i class="icon-calendar3"></i> 31st March, 2015</li>
+                                    <li><i class="icon-time"></i> 20:00 - 02:00</li>
+                                    <li><i class="icon-map-marker2"></i> Ibiza, Spain</li>
+                                    <li><i class="icon-euro"></i> <strong>99.99</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="<%= locals.thisEvent.shopUrl %>" class="btn btn-success btn-block btn-lg" target="_blank">Buy Tickets</a>
+                    </div>
+
+                    <div class="clear"></div>
+
+
+                    <div class="col_full nobottommargin">
+
+                        <h4>Recent Ticket History</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Ticket Number</th>
+                                        <th scope="col">Interaction Event</th>
+                                        <th scope="col">$GET used</th>
+                                        <th scope="col">NFT Explorer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% for(var i = 0; i < locals.tickets.length ; i++) {%>
+                                        <% if(locals.tickets[i].type == "NEW_EVENT"){ %>
+                                            <!-- --- -->
+                                            <% }else{ %>
+
+                                                <tr>
+                                                    <td>
+                                                        <%= locals.tickets[i].nftIndex %>
+                                                    </td>
+                                                    <td>
+                                                        <%= locals.tickets[i].type %>
+                                                    </td>
+                                                    <td>
+                                                        <%= locals.tickets[i].getDebitedFromSilo %>
+                                                    </td>
+                                                    <td>
+                                                        <a href="https://explorer.get-protocol.io/ticket/<%= locals.tickets[i].nftIndex %>" target="_blank">View Ticket</a>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <% } %>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- #content end -->
+    <%- include ("partials/footer") %>

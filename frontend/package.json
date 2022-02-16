@@ -1,0 +1,24 @@
+{
+    "name": "get-community-dashboard",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.25.0",
+        "ejs": "^3.1.6",
+        "expess": "^0.0.1-security",
+        "express": "^4.17.2",
+        "express-router": "^0.0.1",
+        "moment": "^2.29.1",
+        "ramda": "^0.28.0"
+    },
+    "engines": {
+        "node": "12.x"
+    }
+}
