@@ -21,12 +21,14 @@ func main() {
 
 	events, _ := sql.Open("sqlite3", "./events.db")
 	defer events.Close()
+
 	createTable(events)
 	insertEvent(events, "0x05eb82ea183a1c2c80421b4e6a24bf289b512d41", "57.207343258296", "57.168466368552", "0.038876889744", "2943", "2", "0", "0", "0", "0", "Within Temptation: The Aftermath is back!", "https://guts.events/qyn29g-within-temptation-the-aftermath-is-back/ntrpmi", "https://dxvwrajw1w23h.cloudfront.net/covers/e6f51769535d4d638c3c628916d6139c.png", "0", "0", "1640372400", "1641034740", "GUTS")
 	displayEvents(events)
+
 }
 
-func createTable(db *sql.DB) {
+func createTable(db *sql.DB) (err error) {
 	createEventTableSQL := `CREATE TABLE events (
 		"id" TEXT NOT NULL PRIMARY KEY,		
 		"getDebitedFromSilo" FLOAT,
@@ -51,10 +53,10 @@ func createTable(db *sql.DB) {
 	log.Println("Create events table...")
 	statement, err := db.Prepare(createEventTableSQL)
 	if err != nil {
-		log.Fatal(err.Error())
+		return
 	}
 	statement.Exec()
-	log.Println("Event table created")
+	return
 }
 
 func insertEvent(db *sql.DB, id string, getDebitedFromSilo string, getHeldInFuelTanks string, getCreditedToDepot string, mintCount string, invalidateCount string, resaleCount string, scanCount string, checkInCount string, claimCount string, eventName string, shopUrl string, imageUrl string, latitude string, longitude string, startTime string, endTime string, ticketeerName string) {
