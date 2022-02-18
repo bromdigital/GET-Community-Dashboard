@@ -4,6 +4,6 @@
 
 ## Install locally
 
+    > cd frontend
     > npm i
     > npm start
-    > GET community site listening at http://localhost:3000
