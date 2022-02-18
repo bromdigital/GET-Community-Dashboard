@@ -60,6 +60,17 @@ router.get('/:id', (req, res) => {
 
             const eventTicketsArr = eventTickets.filter((a) => a);
 
+            const marker = {
+                id: '0xefe03d479482b43b99e288c7d9ff9a73480c5d3c',
+                name: 'Dubbelprogramma Daniël Arends en Sezgin Güleç',
+                url: 'https://guts.events/hq789i-dubbelprogramma-daniel-en-sezgin/q7lclx',
+                lat: '52.351481',
+                lng: '4.872826',
+                tickeer: 'GUTS',
+                imgURL: 'https://dxvwrajw1w23h.cloudfront.net/covers/e859d39b297d40adb4a7990e3949b9d5.jpg'
+            }
+
+
             // define the main content statics of the site
             const locals = {
                 pageTitle: `Event Profile - ${thisEvent.eventName}`,
@@ -67,7 +78,8 @@ router.get('/:id', (req, res) => {
                 tickets: eventTicketsArr,
                 thisEvent: thisEvent,
                 startDate: startDate,
-                endDate: endDate
+                endDate: endDate,
+                marker: marker
             };
 
             res.render('event-profile', locals);

@@ -6,12 +6,16 @@
         <div class="container clearfix">
             <h1>
                 <%= locals.thisEvent.eventName%><br/>
-                    <strong><%= locals.thisEvent.ticketeerName%></strong></h1>
+                    <strong> <a href="../ticketeer/<%= locals.thisEvent.ticketeerName%>">
+                        <%= locals.thisEvent.ticketeerName%>
+                    </a></strong></h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item">Events</li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <%= locals.thisEvent.ticketeerName%>
+                    <a href="../ticketeer/<%= locals.thisEvent.ticketeerName%>">
+                        <%= locals.thisEvent.ticketeerName%>
+                    </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
                     <%= locals.thisEvent.eventName%>
@@ -68,8 +72,11 @@
                     </div>
 
                     <div class="clear"></div>
-
-
+                    <!-- Small boxes (Stat box) -->
+                    <div class="col_full nobottommargin">
+                        <div id="map" style="z-index: 10"></div>
+                    </div>
+                    <div class="clear"></div>
                     <div class="col_full nobottommargin">
 
                         <h4>Recent Ticket History</h4>
@@ -114,6 +121,7 @@
 
                     </div>
 
+
                 </div>
 
             </div>
@@ -122,4 +130,24 @@
 
     </section>
     <!-- #content end -->
+
+    <script>
+        var map = L.map('map', {
+            center: [32.0, -26.0],
+            minZoom: 3,
+            zoom: 3
+        });
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            subdomains: ['a', 'b', 'c']
+        }).addTo(map);
+
+        markers = <%- JSON.stringify(locals.marker) %>
+
+        for (var i = 0; i < markers.length; ++i) {
+            L.marker([markers[i].lat, markers[i].lng])
+                .bindPopup('<a href="event-profile/' + markers[i].id + '" rel="noopener"><img src="' + markers[i].imgURL + '" alt="' + markers[i].name + '" width="100%" ><p>' + markers[i].name + '<br/> by ' + markers[i].tickeer + '</p></a>')
+                .addTo(map);
+        }
+    </script>
     <%- include ("partials/footer") %>

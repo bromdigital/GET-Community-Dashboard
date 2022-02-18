@@ -1,0 +1,71 @@
+<%- include ("partials/header") %>
+    <!-- Page Title
+		============================================= -->
+    <section id="page-title">
+        <div class="container clearfix" class="page-title-mini">
+            <h1>
+                <%= locals.ticketeerName%>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item">Ticketeers</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <%= locals.ticketeerName%>
+                </li>
+            </ol>
+        </div>
+    </section>
+    <!-- #page-title end -->
+
+    <!-- Content
+		============================================= -->
+    <section id="content">
+
+        <div class="content-wrap">
+
+            <div class="container clearfix">
+
+                <div class="col_full nobottommargin">
+
+                    <h4>
+                        <%= locals.ticketeerName%>: Top Events</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Event Name</th>
+                                    <th scope="col">Tickets Sold</th>
+                                    <th scope="col">GET used</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <% for(var i = 0; i < locals.ticketeerProfile.length ; i++) {%>
+                                    <tr>
+                                        <td>
+                                            <a href="../event-profile/<%= locals.ticketeerProfile[i].id%>">
+                                                <%= locals.ticketeerProfile[i].eventName %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <%= locals.helpers.numberWithCommas(locals.ticketeerProfile[i].mintCount) %>
+                                        </td>
+                                        <td>
+                                            <%= Number(locals.ticketeerProfile[i].getDebitedFromSilo).toFixed(6) %>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- #content end -->
+    <%- include ("partials/footer") %>
