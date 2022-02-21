@@ -52,7 +52,7 @@
                                 <ul class="iconlist nobottommargin">
                                     <li><strong>GET used</strong></li>
                                     <li>
-                                        <%= locals.helpers.numberWithCommas(Number(locals.eventData.thisEventResult.getDebitedFromSilo).toFixed(6)) %>
+                                        <%= Number(locals.eventData.thisEventResult.getDebitedFromSilo).toFixed(6) %>
                                     </li>
                                     <li><strong>Mint count</strong></li>
                                     <li>
@@ -87,10 +87,6 @@
                     </div>
 
                     <div class="clear"></div>
-                    <!-- Small boxes (Stat box) -->
-                    <div class="col_full nobottommargin">
-                        <div id="map" style="z-index: 10"></div>
-                    </div>
                     <div class="clear"></div>
                     <div class="col_full nobottommargin">
 

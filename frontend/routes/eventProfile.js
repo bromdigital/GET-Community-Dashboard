@@ -21,9 +21,9 @@ router.get('/:id', (req, res) => {
             } else {
                 var eventPast = false
             }
-
+            console.log(eventData)
             const locals = {
-                pageTitle: `Event Profile - ${eventData.eventName}`,
+                pageTitle: `Event Profile - ${eventData.thisEventResult.eventName}`,
                 helpers: helpers,
                 eventData: eventData,
                 eventPast: eventPast
