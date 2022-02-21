@@ -1,7 +1,8 @@
 var express = require('express'),
     router = express.Router();
+const { prop, sum } = require("ramda")
 
-// include the functions 
+// include the functions
 const subGraph = require('../inc/subGraph');
 const coinGecko = require('../inc/coinGecko');
 const helpers = require('../inc/helpers');

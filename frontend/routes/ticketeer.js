@@ -1,6 +1,9 @@
 var express = require('express'),
     router = express.Router();
 
+const { prop, sum } = require("ramda")
+
+
 // include the functions 
 const subGraph = require('../inc/subGraph');
 const coinGecko = require('../inc/coinGecko');
@@ -11,16 +14,17 @@ router.get('/:name', (req, res) => {
 
     const main = async() => {
         try {
+            var ticketeerProfile = await subGraph.ticketeerProfile(ticketeerName)
 
-            const ticketeerProfile = await subGraph.ticketeerProfile(ticketeerName)
+            var totalGETused = sum(ticketeerProfile.map(prop("getDebitedFromSilo")))
 
             const locals = {
                 pageTitle: `Ticketeer - ${ticketeerName}`,
                 ticketeerProfile: ticketeerProfile,
+                totalGETused: totalGETused,
                 ticketeerName: ticketeerName,
                 helpers: helpers
             };
-
 
             res.render('ticketeer-profile', locals);
 

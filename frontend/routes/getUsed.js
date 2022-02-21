@@ -3,94 +3,128 @@ var express = require('express'),
 const axios = require('axios');
 const { prop, sum } = require("ramda")
 const moment = require('moment');
-const helpers = require('../inc/functions');
 
 const getSubGraphURL = "https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph";
+
+
+// include the functions
+const subGraph = require('../inc/subGraph');
+const coinGecko = require('../inc/coinGecko');
+const helpers = require('../inc/helpers');
+
+const generateMints = async() => {
+    try {
+
+        var recentMints = await subGraph.recentMints(30)
+        var todayGET = await subGraph.usedGETtoday()
+
+        var html = `<div class="container clearfix">
+        <div class="container-fluid py-4">
+            <div class="row newMints">`
+
+        for (var i = 0; i < recentMints.firstFour.length; i++) {
+            html += `<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="numbers">
+                            <p class="text-sm mb-0">
+                                ${recentMints.firstFour[i].blockTimestamp}
+                            </p>
+                            <h5>
+                                ${recentMints.firstFour[i].event.eventName}<br />
+                                    <span class="text-sm font-weight-bolder">${recentMints.firstFour[i].event.ticketeerName}</span>
+                            </h5>
+                        </div>
+                        <div class="imgTile" style="background-image: url('${recentMints.firstFour[i].event.imageUrl}'" );>
+                        </div>
+                        <h6>
+                            ${Number(recentMints.firstFour[i].getDebitedFromSilo).toFixed(6)} $GET used as fuel.
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>`
+        }
+
+        html += `</tbody>
+        </table>
+    </div>
+</div>
+<div class="col_full nobottommargin">
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Ticket Number</th>
+                <th scope="col">Event Name</th>
+                <th scope="col">Ticketeer Name</th>
+                <th scope="col">$GET used</th>
+                <th scope="col">Block Timestamp</th>
+                <th scope="col">NFT Explorer</th>
+            </tr>
+        </thead>
+        <tbody>                   
+        `
+        for (var i = 0; i < recentMints.recentMints.length; i++) {
+            html += '<tr>'
+            html += `<td> ${recentMints.recentMints[i].nftIndex} </td>`
+            html += `<td> ${recentMints.recentMints[i].event.eventName} </td>`
+            html += `<td> ${recentMints.recentMints[i].event.ticketeerName} </td>`
+            html += `<td> ${recentMints.recentMints[i].getDebitedFromSilo} </td>`
+            html += `<td> ${recentMints.recentMints[i].blockTimestamp} </td>`
+            html += `<td> View Ticket </td>`
+            html += '</tr>'
+        }
+
+        html += `</tbody>
+        </table>
+    </div>
+</div></div>`
+
+        return {
+            html: html,
+            todayGET: todayGET
+        }
+
+    } catch (err) {
+        console.log(err);
+        res.render('404');
+    }
+}
+
 
 router.get('/recent-mint', (req, res) => {
     const main = async() => {
         try {
-            const firstFour = await axios.post(
-                getSubGraphURL, {
-                    query: `
-                    {
-                        usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: 4, where: { type: MINT }) {
-                            type
-                            nftIndex
-                            getDebitedFromSilo
-                            blockTimestamp
-                            event {
-                              id
-                              eventName
-                              imageUrl
-                              shopUrl
-                            }
-                        }
-                    } 
-            `
-                }
-            )
 
-            const recentMints = await axios.post(
-                getSubGraphURL, {
-                    query: `
-                    {
-                        usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: 36, skip: 4, where: { type: MINT }) {
-                            type
-                            nftIndex
-                            getDebitedFromSilo
-                            blockTimestamp
-                            event {
-                              id
-                              eventName
-                            }
-                        }
-                    } 
-            `
-                }
-            )
-
-            const todayGETUsed = await axios.post(
-                getSubGraphURL, {
-                    query: `
-                    {
-                        protocolDays(orderBy: day, orderDirection: desc, first: 1) {
-                          day
-                          mintCount
-                          getDebitedFromSilos
-                          getCreditedToDepot
-                          averageGetPerMint
-                        }
-                      }
-                      
-                    `
-                }
-            )
-
-            todayGET = todayGETUsed.data.data.protocolDays[0].getDebitedFromSilos
-
-
-            var recentMinted = recentMints.data.data.usageEvents
-            for (var i = 0; i < recentMinted.length; i++) {
-                recentMinted[i].blockTimestamp = moment.unix(recentMinted[i].blockTimestamp).format("MM/DD hh:mm:ss a")
-            }
-
-            var newestFour = firstFour.data.data.usageEvents
-            for (var i = 0; i < newestFour.length; i++) {
-                newestFour[i].blockTimestamp = moment.unix(newestFour[i].blockTimestamp).format("MM/DD hh:mm:ss a")
-            }
+            var recentMints = await subGraph.recentMints(30)
+            var todayGET = await subGraph.usedGETtoday()
 
             // define the main content statics of the site
             const locals = {
                 pageTitle: "GET Protocol Community - Recently Minted",
-                firstFour: newestFour,
                 helpers: helpers,
-                recentMinted: recentMinted,
-                todayGET: todayGET
+                todayGET: todayGET,
+                recentMints: recentMints
             };
 
             res.render('usage/recent-mint', locals);
 
+        } catch (err) {
+            console.log(err);
+            res.render('404');
+        }
+    }
+    main()
+})
+
+// Handling request 
+router.post("/request", (req, res) => {
+    const main = async() => {
+        try {
+            var htmlUpdate = await generateMints()
+            res.send(htmlUpdate)
         } catch (err) {
             console.log(err);
             res.render('404');

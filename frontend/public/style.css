@@ -221,7 +221,7 @@ h6 {
     font-weight: 600;
     line-height: 1.5;
     margin: 0 0 30px 0;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
 }
 
 h5,
@@ -647,7 +647,7 @@ span.middot {
 }
 
 .font-primary {
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
 }
 
 .font-secondary {
@@ -1390,7 +1390,7 @@ body.stretched #header.full-header .container {
 #logo {
     position: relative;
     float: left;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     font-size: 36px;
     line-height: 100%;
     margin-right: 40px;
@@ -1539,7 +1539,7 @@ body.stretched #header.full-header .container {
     font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     -webkit-transition: margin .4s ease, padding .4s ease;
     -o-transition: margin .4s ease, padding .4s ease;
     transition: margin .4s ease, padding .4s ease;
@@ -1754,7 +1754,7 @@ body.stretched #header.full-header #primary-menu ul li.mega-menu .mega-menu-cont
 #primary-menu ul li .mega-menu-content.style-2 ul.mega-menu-column>li.mega-menu-title>a {
     font-size: 13px;
     font-weight: bold;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     letter-spacing: 1px;
     text-transform: uppercase !important;
     margin-bottom: 15px;
@@ -2248,7 +2248,7 @@ body.top-search-open #top-search form {
     color: #333;
     font-weight: 700;
     margin-top: 0 !important;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     letter-spacing: 2px;
 }
 
@@ -4387,7 +4387,7 @@ body:not(.device-touch) .portfolio {
     position: relative;
     width: 25%;
     height: auto;
-    padding: 0 12px 12px 0;
+    padding: 0px;
 }
 
 .portfolio-notitle .portfolio-item,
@@ -5864,7 +5864,7 @@ body.device-touch.device-xs .portfolio-notitle .portfolio-overlay {
     padding: 30px 0;
     text-align: center;
     color: #444;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 24px;
@@ -6148,7 +6148,7 @@ body:not(.device-touch) .entry-link {
     font-weight: bold;
     letter-spacing: 1px;
     text-transform: uppercase;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
 }
 
 .post-timeline .entry-timeline {
@@ -7779,7 +7779,7 @@ body:not(.device-touch) .button {
     font-size: 22px;
     height: auto;
     line-height: 1;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
 }
 
 .button.button-desc span {
@@ -11316,7 +11316,7 @@ ul.tab-nav-lg li {
 ul.tab-nav-lg li a {
     display: inline-block;
     color: #444;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     font-size: 13px;
     font-weight: bold;
     text-transform: uppercase;
@@ -12401,7 +12401,7 @@ body:not(.device-touch) .team-overlay {
 .counter {
     font-size: 42px;
     font-weight: 600;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
 }
 
 .counter.counter-small {
@@ -13397,7 +13397,7 @@ label {
     display: inline-block;
     font-size: 13px;
     font-weight: 700;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #555;
@@ -14946,7 +14946,7 @@ body:not(.device-touch) .tagcloud a {
 .widget-filter-links li a {
     display: block;
     color: #444;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     font-weight: 500;
 }
 
@@ -15009,7 +15009,7 @@ body:not(.device-touch) .tagcloud a {
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 2px;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
 }
 
 .nav-tree li i {
@@ -15091,7 +15091,7 @@ body:not(.device-touch) .tagcloud a {
     font-weight: bold;
     text-align: right;
     text-transform: uppercase;
-    font-family: 'Raleway', sans-serif;
+    font-family: ' ', sans-serif;
     letter-spacing: 2px;
 }
 
