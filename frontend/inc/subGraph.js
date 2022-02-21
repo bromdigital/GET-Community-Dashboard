@@ -4,6 +4,8 @@ const { prop, sum } = require("ramda")
 const unixTimestamp = (new Date().getTime()) / 1000;
 const unixDay = Math.floor(unixTimestamp / 86400);
 const getSubGraphURL = "https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph";
+const moment = require('moment');
+
 
 module.exports = {
 
@@ -62,12 +64,77 @@ module.exports = {
         return totalTickets
     },
 
+    recentMints: async(number) => {
+
+        var firstFour = await axios.post(
+            getSubGraphURL, {
+                query: `
+                {
+                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: 4, where: { type: MINT }) {
+                        type
+                        nftIndex
+                        getDebitedFromSilo
+                        blockTimestamp
+                        event {
+                          id
+                          eventName
+                          imageUrl
+                          shopUrl
+                          ticketeerName
+                        }
+                    }
+                } 
+        `
+            }
+        )
+
+        var recentMints = await axios.post(
+            getSubGraphURL, {
+                query: `
+                {
+                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: ${number - 4}, skip: 4, where: { type: MINT }) {
+                        type
+                        nftIndex
+                        getDebitedFromSilo
+                        blockTimestamp
+                        event {
+                          id
+                          eventName
+                          ticketeerName
+                        }
+                    }
+                } 
+        `
+            }
+        )
+
+        recentMints = recentMints.data.data.usageEvents
+
+        for (var i = 0; i < recentMints.length; i++) {
+            recentMints[i].blockTimestamp = moment.unix(recentMints[i].blockTimestamp).format("MM/DD/YY HH:mm:ss")
+        }
+
+        firstFour = firstFour.data.data.usageEvents
+
+        for (var i = 0; i < firstFour.length; i++) {
+            firstFour[i].blockTimestamp = moment.unix(firstFour[i].blockTimestamp).format("MM/DD/YY HH:mm:ss")
+        }
+
+        return {
+            recentMints: recentMints,
+            firstFour: firstFour
+        }
+
+    },
+
+
+
     ticketeerProfile: async(name) => {
         const ticketeer = await axios.post(
             getSubGraphURL, {
                 query: `
                 {
-                    events(orderBy: getDebitedFromSilo, orderDirection: desc, where:{ticketeerName: "${name}" } ){
+                    events(orderBy: getDebitedFromSilo, orderDirection: desc, first: 1000,  where:{ticketeerName: "${name}" } ){
                       id
                       eventName
                       getDebitedFromSilo
@@ -157,5 +224,59 @@ module.exports = {
         mapMarkers = mapMarkers.filter(e => e.ticketeerName != "Demo");
 
         return mapMarkers
+    },
+
+    // map markers function 
+    singleEvent: async function(id) {
+        var thisEventResult = await axios.post(
+            getSubGraphURL, {
+                query: `
+                {
+                    event(id: "${id}") {
+                      id 
+                      eventName
+                      mintCount
+                      scanCount
+                      claimCount
+                      imageUrl
+                      startTime
+                      endTime
+                      ticketeerName
+                      getDebitedFromSilo
+                      averageGetPerMint
+                      shopUrl
+                    }
+                  }
+        `
+            }
+        )
+
+        thisEventResult = thisEventResult.data.data.event
+
+        let startDate = moment.unix(thisEventResult.startTime).format("MM/DD/YY | HH:mm")
+        let endDate = moment.unix(thisEventResult.endTime).format("MM/DD/YY | HH:mm")
+
+        let tickets = await axios.post(
+            getSubGraphURL, {
+                query: `
+                {
+                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, where: { event: "${id}" }) {
+                        type
+                        nftIndex
+                        getDebitedFromSilo
+                    }
+                }
+        `
+            }
+        )
+
+        tickets = tickets.data.data.usageEvents
+
+        return {
+            thisEventResult: thisEventResult,
+            tickets: tickets,
+            startDate: startDate,
+            endDate: endDate,
+        }
     }
 };

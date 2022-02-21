@@ -5,20 +5,20 @@
 
         <div class="container clearfix">
             <h1>
-                <%= locals.thisEvent.eventName%><br/>
-                    <strong> <a href="../ticketeer/<%= locals.thisEvent.ticketeerName%>">
-                        <%= locals.thisEvent.ticketeerName%>
+                <%= locals.eventData.thisEventResult.eventName%><br/>
+                    <strong> <a href="../ticketeer/<%= locals.eventData.thisEventResult.ticketeerName%>">
+                        <%= locals.eventData.thisEventResult.ticketeerName%>
                     </a></strong></h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item">Events</li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="../ticketeer/<%= locals.thisEvent.ticketeerName%>">
-                        <%= locals.thisEvent.ticketeerName%>
+                    <a href="../ticketeer/<%= locals.eventData.thisEventResult.ticketeerName%>">
+                        <%= locals.eventData.thisEventResult.ticketeerName%>
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <%= locals.thisEvent.eventName%>
+                    <%= locals.eventData.thisEventResult.eventName%>
                 </li>
             </ol>
         </div>
@@ -38,7 +38,9 @@
 
                     <div class="col_three_fourth">
                         <div class="entry-image nobottommargin">
-                            <a href="<%= locals.thisEvent.shopUrl %>" target="_blank"><img src="<%= locals.thisEvent.imageUrl %>" alt="<%= locals.thisEvent.ticketeerName%>"></a>
+                            <div class="imgTileProfile" style="background-image: url(<%=locals.eventData.thisEventResult.imageUrl%>); ">
+
+                            </div>
                         </div>
                     </div>
                     <div class="col_one_fourth col_last">
@@ -49,9 +51,13 @@
                             <div class="card-body">
                                 <ul class="iconlist nobottommargin">
                                     <li><strong>GET used</strong></li>
-                                    <li>32894398239438 ($234.234)</li>
+                                    <li>
+                                        <%= Number(locals.eventData.thisEventResult.getDebitedFromSilo).toFixed(6) %>
+                                    </li>
                                     <li><strong>Mint count</strong></li>
-                                    <li>99678</li>
+                                    <li>
+                                        <%= locals.helpers.numberWithCommas(locals.eventData.thisEventResult.mintCount) %>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -59,23 +65,28 @@
                             <div class="card-header">
                                 <h5 class="mb-0">Event Info:</h5>
                             </div>
+
                             <div class="card-body">
                                 <ul class="iconlist nobottommargin">
-                                    <li><i class="icon-calendar3"></i> 31st March, 2015</li>
-                                    <li><i class="icon-time"></i> 20:00 - 02:00</li>
-                                    <li><i class="icon-map-marker2"></i> Ibiza, Spain</li>
-                                    <li><i class="icon-euro"></i> <strong>99.99</strong></li>
+                                    <li><i class="icon-calendar3"></i><strong>Start</strong>
+                                        <%=locals.eventData.startDate%>
+                                    </li>
+                                    <li><i class="icon-calendar3"></i><strong>Ends</strong>
+                                        <%=locals.eventData.endDate%>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <a href="<%= locals.thisEvent.shopUrl %>" class="btn btn-success btn-block btn-lg" target="_blank">Buy Tickets</a>
+                        <% if (locals.eventPast) { %>
+                            <div class="alert alert-danger" role="alert">
+                                This event has ended.
+                            </div>
+                            <%}else { %>
+                                <a href="<%= locals.eventData.thisEventResult.shopUrl %>" class="btn btn-success btn-block btn-lg" target="_blank">Buy Tickets</a>
+                                <%} %>
                     </div>
 
                     <div class="clear"></div>
-                    <!-- Small boxes (Stat box) -->
-                    <div class="col_full nobottommargin">
-                        <div id="map" style="z-index: 10"></div>
-                    </div>
                     <div class="clear"></div>
                     <div class="col_full nobottommargin">
 
@@ -93,23 +104,23 @@
                                 </thead>
                                 <tbody>
 
-                                    <% for(var i = 0; i < locals.tickets.length ; i++) {%>
-                                        <% if(locals.tickets[i].type == "NEW_EVENT"){ %>
+                                    <% for(var i = 0; i < locals.eventData.tickets.length ; i++) {%>
+                                        <% if(locals.eventData.tickets[i].type == "NEW_EVENT"){ %>
                                             <!-- --- -->
                                             <% }else{ %>
 
                                                 <tr>
                                                     <td>
-                                                        <%= locals.tickets[i].nftIndex %>
+                                                        <%= locals.eventData.tickets[i].nftIndex %>
                                                     </td>
                                                     <td>
-                                                        <%= locals.tickets[i].type %>
+                                                        <%= locals.eventData.tickets[i].type %>
                                                     </td>
                                                     <td>
-                                                        <%= locals.tickets[i].getDebitedFromSilo %>
+                                                        <%= locals.eventData.tickets[i].getDebitedFromSilo %>
                                                     </td>
                                                     <td>
-                                                        <a href="https://explorer.get-protocol.io/ticket/<%= locals.tickets[i].nftIndex %>" target="_blank">View Ticket</a>
+                                                        <a href="https://explorer.get-protocol.io/ticket/<%= locals.eventData.tickets[i].nftIndex %>" target="_blank">View Ticket</a>
                                                     </td>
                                                 </tr>
                                                 <% } %>
@@ -131,23 +142,4 @@
     </section>
     <!-- #content end -->
 
-    <script>
-        var map = L.map('map', {
-            center: [32.0, -26.0],
-            minZoom: 3,
-            zoom: 3
-        });
-        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            subdomains: ['a', 'b', 'c']
-        }).addTo(map);
-
-        markers = <%- JSON.stringify(locals.marker) %>
-
-        for (var i = 0; i < markers.length; ++i) {
-            L.marker([markers[i].lat, markers[i].lng])
-                .bindPopup('<a href="event-profile/' + markers[i].id + '" rel="noopener"><img src="' + markers[i].imgURL + '" alt="' + markers[i].name + '" width="100%" ><p>' + markers[i].name + '<br/> by ' + markers[i].tickeer + '</p></a>')
-                .addTo(map);
-        }
-    </script>
     <%- include ("partials/footer") %>

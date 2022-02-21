@@ -5,6 +5,12 @@
         <div class="container clearfix" class="page-title-mini">
             <h1>
                 <%= locals.ticketeerName%>
+                    <p>
+                        GET used by
+                        <%= locals.ticketeerName%>:
+                            <%= Number(locals.totalGETused).toFixed(6)%> (based on top
+                                <%= locals.ticketeerProfile.length %> events)
+                    </p>
             </h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -28,7 +34,8 @@
                 <div class="col_full nobottommargin">
 
                     <h4>
-                        <%= locals.ticketeerName%>: Top Events</h4>
+                        <%= locals.ticketeerName%>: Top
+                            <%= locals.ticketeerProfile.length %> Events</h4>
 
                     <div class="table-responsive">
                         <table class="table table-striped">

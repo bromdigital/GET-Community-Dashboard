@@ -35,8 +35,17 @@
 }
 
 .tile {
-    border: 3px solid #ccc;
+    border: 2px solid #a0e8ce;
     height: 40vh
+}
+
+.newMints {
+    padding-bottom: 70px;
+}
+
+.redhead {
+    background-color: red;
+    color: white;
 }
 
 .card-shadow {
@@ -52,7 +61,22 @@
     background-image: url("../img/img-404.png");
     background-size: cover;
     background-position: center center;
-    padding: 20px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.content-wrap-events {
+    position: relative;
+    padding: 0px;
+}
+
+.imgTileProfile {
+    width: 100%;
+    height: 35em;
+    background-color: #a0e8ce;
+    background-size: cover;
+    background-position: center center;
+    padding: 0px;
 }
 
 .noOverhang {
