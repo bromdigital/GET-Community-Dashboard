@@ -156,53 +156,16 @@ router.get('/newest-events', (req, res) => {
 
     const main = async() => {
         try {
-            const newEventsResults = await axios.post(
-                getSubGraphURL, {
-                    query: `
-                    {
-                        usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: 150, where: { type: NEW_EVENT }) {
-                            type
-                            nftIndex
-                            getDebitedFromSilo
-                            event {
-                              id
-                              eventName
-                              ticketeerName
-                              imageUrl
-                              shopUrl
-                            }
-                        }
-                    } 
-            `
-                }
-            )
 
-            var newEvents = newEventsResults.data.data.usageEvents
+            var newEventsResults = await subGraph.recentEvents(30)
 
-            for (var i = 0; i < newEvents.length; i++) {
-                if (newEvents[i].event.imageUrl == '' || newEvents[i].event.imageUrl == 'https://dxvwrajw1w23h.cloudfront.net/') {
-                    newEvents[i].event.imageUrl += '../img/img-404.png'
-                } else {
-                    // console.log("this is not a demo")
-                }
-            }
-
-            var trimDuplicateArray = newEvents.reduce((filter, current) => {
-                var dk = filter.find(item => item.event.eventName === current.event.eventName);
-                if (!dk) {
-                    return filter.concat([current]);
-                } else {
-                    return filter;
-                }
-            }, []);
             // define the main content statics of the site
             const locals = {
                 pageTitle: "GET Protocol Community - Newest Events",
                 helpers: helpers,
-                newEvents: trimDuplicateArray,
+                newEvents: newEventsResults
             };
 
-            //console.log(newEvents)
             res.render('usage/newest-events', locals);
 
         } catch (err) {
