@@ -32,8 +32,10 @@ const generateMints = async() => {
                                 ${recentMints.firstFour[i].blockTimestamp}
                             </p>
                             <h5>
-                                ${recentMints.firstFour[i].event.eventName}<br />
-                                    <span class="text-sm font-weight-bolder">${recentMints.firstFour[i].event.ticketeerName}</span>
+                            <a href="../event-profile/${recentMints.firstFour[i].event.id}">
+                                ${recentMints.firstFour[i].event.eventName}</a><br />
+                                <a href="../ticketeer/${recentMints.firstFour[i].event.ticketeerName}">
+                                <span class="text-sm font-weight-bolder">${recentMints.firstFour[i].event.ticketeerName}</span></a>
                             </h5>
                         </div>
                         <div class="imgTile" style="background-image: url('${recentMints.firstFour[i].event.imageUrl}'" );>
@@ -67,20 +69,37 @@ const generateMints = async() => {
         <tbody>                   
         `
         for (var i = 0; i < recentMints.recentMints.length; i++) {
-            html += '<tr>'
-            html += `<td> ${recentMints.recentMints[i].nftIndex} </td>`
-            html += `<td> ${recentMints.recentMints[i].event.eventName} </td>`
-            html += `<td> ${recentMints.recentMints[i].event.ticketeerName} </td>`
-            html += `<td> ${recentMints.recentMints[i].getDebitedFromSilo} </td>`
-            html += `<td> ${recentMints.recentMints[i].blockTimestamp} </td>`
-            html += `<td> View Ticket </td>`
-            html += '</tr>'
+            html += `<tr>
+            <td>
+                ${recentMints.recentMints[i].nftIndex}
+            </td>
+            <td>
+                <a href="../event-profile/${recentMints.recentMints[i].event.id}">
+                    ${recentMints.recentMints[i].event.eventName}
+                </a>
+            </td>
+            <td>
+                <a href="../ticketeer/${recentMints.recentMints[i].event.ticketeerName}">
+                    ${recentMints.recentMints[i].event.ticketeerName}
+                </a>
+            </td>
+
+            <td>
+                ${recentMints.recentMints[i].getDebitedFromSilo}
+            </td>
+            <td>
+                ${recentMints.recentMints[i].blockTimestamp}
+            </td>
+            <td>
+                <a href="https://explorer.get-protocol.io/ticket/${recentMints.recentMints[i].nftIndex}" target="_blank">View Ticket</a>
+            </td>
+        </tr>`
         }
 
         html += `</tbody>
         </table>
     </div>
-</div></div>`
+</div>`
 
         return {
             html: html,

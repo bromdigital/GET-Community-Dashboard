@@ -28,8 +28,10 @@
                                                         <%= locals.recentMints.firstFour[i].blockTimestamp %>
                                                     </p>
                                                     <h5>
-                                                        <%= locals.recentMints.firstFour[i].event.eventName %><br />
-                                                            <span class="text-sm font-weight-bolder"><%= locals.recentMints.firstFour[i].event.ticketeerName %></span>
+                                                        <a href="../event-profile/<%= locals.recentMints.firstFour[i].event.id %>">
+                                                            <%= locals.recentMints.firstFour[i].event.eventName %><br /></a>
+                                                        <a href="../ticketeer/<%= locals.recentMints.firstFour[i].event.ticketeerName %>">
+                                                            <span class="text-sm font-weight-bolder"><%= locals.recentMints.firstFour[i].event.ticketeerName %></span></a>
                                                     </h5>
                                                 </div>
                                                 <div class="imgTile" style="background-image: url('<%= locals.recentMints.firstFour[i].event.imageUrl %>'" );>
@@ -94,18 +96,20 @@
                     </div>
                 </div>
             </div>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
-            </script>
-            <script>
-                $(document).ready(function() {
-                    var intervalId = window.setInterval(function() {
-                        $.post("/usage/request",
-                            function(data, status) {
-                                document.getElementById("mintContainer").innerHTML = data.html;
-                                document.getElementById("mintCount").innerHTML = `${Number(locals.todayGET.getDebitedFromSilos).toFixed(6)} (${locals.helpers.numberWithCommas(locals.todayGET.mintCount)} tickets)`
-                            });
-                    }, 10000);
-                });
-            </script>
-            <!-- /.content -->
-            <%- include ("../partials/footer") %>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+        <script>
+            $(document).ready(function() {
+                var intervalId = window.setInterval(function() {
+                    $.post("/usage/request",
+                        function(data, status) {
+                            document.getElementById("mintContainer").innerHTML = data.html;
+                            document.getElementById("mintCount").innerHTML = `${Number(locals.todayGET.getDebitedFromSilos).toFixed(6)} (${locals.helpers.numberWithCommas(locals.todayGET.mintCount)} tickets)`
+                        });
+                }, 10000);
+            });
+        </script>
+        <!-- /.content -->
+        <%- include ("../partials/footer") %>
