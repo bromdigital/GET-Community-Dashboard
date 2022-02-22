@@ -1,15 +1,15 @@
-name: Lint Code Base
-
+name: Lint
 on:
   push:
     branches:
       - main
   pull_request:
 jobs:
-  eslint:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: stefanoeb/eslint-action@1.0.2
-        with:
-          working-directory: src
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: yarn install
+      - name: Run linting checks
+        run: yarn run check
