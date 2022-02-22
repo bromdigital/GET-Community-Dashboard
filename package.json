@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon index.js"
+        "start": "node frontend/index.js"
     },
     "author": "",
     "license": "ISC",
@@ -14,13 +14,10 @@
         "coingecko-api": "^1.0.10",
         "ejs": "^3.1.6",
         "expess": "^0.0.1-security",
-        "express": "^4.17.2",
+        "express": "^4.17.3",
         "express-router": "^0.0.1",
         "moment": "^2.29.1",
         "ramda": "^0.28.0"
-    },
-    "engines": {
-        "node": "12.x"
     },
     "devDependencies": {
         "supertest": "^6.2.2"
