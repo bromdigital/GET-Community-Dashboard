@@ -1,25 +1,24 @@
-var path = require('path');
+const path = require('path')
 const express = require('express')
 const app = express()
-const port_running = process.env.PORT || 3000
+const portRunning = process.env.PORT || 3000
 
-
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 
 // Static Files
-app.use(express.static(__dirname + '/public'))
+const publicPath = path.join(__dirname, '/public')
+app.use(express.static(publicPath))
 
 // Set Views
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, '/views'));
+app.set('views', path.join(__dirname, '/views'))
 
 // load some routes //
-var homeRoute = require('./routes/home')
-var eventProfileRoute = require('./routes/eventProfile')
-var usageRoute = require('./routes/getUsed')
-var mapRoute = require('./routes/map')
-var ticketeerRoute = require('./routes/ticketeer')
-
+const homeRoute = require('./routes/home')
+const eventProfileRoute = require('./routes/eventProfile')
+const usageRoute = require('./routes/getUsed')
+const mapRoute = require('./routes/map')
+const ticketeerRoute = require('./routes/ticketeer')
 
 // the routes //
 app.use('/', homeRoute)
@@ -28,16 +27,15 @@ app.use('/usage', usageRoute)
 app.use('/map', mapRoute)
 app.use('/ticketeer', ticketeerRoute)
 
-
 // 404 page
 app.get('*', (req, res) => {
-    // define the main content statics of the site 
-    const locals = {
-        pageTitle: "Oh no! - Something went wrong."
-    };
-    res.render('404');
+  // define the main content statics of the site
+  const locals = {
+    pageTitle: 'Oh no! - Something went wrong.'
+  }
+  res.render('404', locals)
 })
 
-app.listen(port_running, () => {
-    console.log(`GET community site listening at http://localhost:${port_running}`)
+app.listen(portRunning, () => {
+  console.log(`GET community site listening at http://localhost:${portRunning}`)
 })

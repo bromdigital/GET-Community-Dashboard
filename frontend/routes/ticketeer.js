@@ -1,39 +1,35 @@
-var express = require('express'),
-    router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const { prop, sum } = require("ramda")
+const { prop, sum } = require('ramda')
 
-
-// include the functions 
-const subGraph = require('../inc/subGraph');
-const coinGecko = require('../inc/coinGecko');
-const helpers = require('../inc/helpers');
+// include the functions
+const subGraph = require('../inc/subGraph')
+const helpers = require('../inc/helpers')
 
 router.get('/:name', (req, res) => {
-    var ticketeerName = req.params.name;
+  const ticketeerName = req.params.name
 
-    const main = async() => {
-        try {
-            var ticketeerProfile = await subGraph.ticketeerProfile(ticketeerName)
+  const main = async () => {
+    try {
+      const ticketeerProfile = await subGraph.ticketeerProfile(ticketeerName)
 
-            var totalGETused = sum(ticketeerProfile.map(prop("getDebitedFromSilo")))
+      const totalGETused = sum(ticketeerProfile.map(prop('getDebitedFromSilo')))
 
-            const locals = {
-                pageTitle: `Ticketeer - ${ticketeerName}`,
-                ticketeerProfile: ticketeerProfile,
-                totalGETused: totalGETused,
-                ticketeerName: ticketeerName,
-                helpers: helpers
-            };
+      const locals = {
+        pageTitle: `Ticketeer - ${ticketeerName}`,
+        ticketeerProfile: ticketeerProfile,
+        totalGETused: totalGETused,
+        ticketeerName: ticketeerName,
+        helpers: helpers
+      }
 
-            res.render('ticketeer-profile', locals);
-
-        } catch (err) {
-            console.log(err);
-            res.render('404');
-        }
+      res.render('ticketeer-profile', locals)
+    } catch (err) {
+      console.log(err)
+      res.render('404')
     }
-    main()
-
+  }
+  main()
 })
-module.exports = router;
+module.exports = router

@@ -1,19 +1,14 @@
 // ========
 const axios = require('axios')
-const { prop, sum } = require("ramda")
-const unixTimestamp = (new Date().getTime()) / 1000;
-const unixDay = Math.floor(unixTimestamp / 86400);
-const getSubGraphURL = "https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph";
-const moment = require('moment');
-
+const getSubGraphURL = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph'
+const moment = require('moment')
 
 module.exports = {
 
-    usedGETtoday: async() => {
-
-        const usedGET = await axios.post(
-            getSubGraphURL, {
-                query: `
+  usedGETtoday: async () => {
+    const usedGET = await axios.post(
+      getSubGraphURL, {
+        query: `
             {
                 protocolDays(orderBy: day, orderDirection: desc, first: 1) {
                     getDebitedFromSilos
@@ -21,15 +16,15 @@ module.exports = {
                   }
                 }
             `
-            }
-        )
-        return usedGET.data.data.protocolDays[0]
-    },
+      }
+    )
+    return usedGET.data.data.protocolDays[0]
+  },
 
-    weekReport: async() => {
-        const result = await axios.post(
-            getSubGraphURL, {
-                query: `
+  weekReport: async () => {
+    const result = await axios.post(
+      getSubGraphURL, {
+        query: `
             {
                 protocolDays(orderBy: day, orderDirection: desc, first: 7) {
                     getDebitedFromSilos
@@ -37,38 +32,37 @@ module.exports = {
                   }
                 }
             `
-            }
-        )
+      }
+    )
 
-        return result.data.data.protocolDays
-    },
+    return result.data.data.protocolDays
+  },
 
-    totalTicketSales: async() => {
-        const mintCountResults = await axios.post(
-            getSubGraphURL, {
-                query: `
+  totalTicketSales: async () => {
+    const mintCountResults = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     protocol(id:1) {
                       mintCount
                     }
                   }
                 `
-            }
-        )
+      }
+    )
 
-        // ticket sales data 
-        const priorPolygonTS = parseInt(639813); // Tickets sold prior to Polygon migration 
+    // ticket sales data
+    const priorPolygonTS = parseInt(639813) // Tickets sold prior to Polygon migration
 
-        let totalTickets = priorPolygonTS + Number(parseInt(mintCountResults.data.data.protocol.mintCount))
+    const totalTickets = priorPolygonTS + Number(parseInt(mintCountResults.data.data.protocol.mintCount))
 
-        return totalTickets
-    },
+    return totalTickets
+  },
 
-    recentMints: async(number) => {
-
-        var firstFour = await axios.post(
-            getSubGraphURL, {
-                query: `
+  recentMints: async (number) => {
+    let firstFour = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: 4, where: { type: MINT }) {
                         type
@@ -85,12 +79,12 @@ module.exports = {
                     }
                 } 
         `
-            }
-        )
+      }
+    )
 
-        var recentMints = await axios.post(
-            getSubGraphURL, {
-                query: `
+    let recentMints = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: ${number - 4}, skip: 4, where: { type: MINT }) {
                         type
@@ -105,34 +99,31 @@ module.exports = {
                     }
                 } 
         `
-            }
-        )
+      }
+    )
 
-        recentMints = recentMints.data.data.usageEvents
+    recentMints = recentMints.data.data.usageEvents
 
-        for (var i = 0; i < recentMints.length; i++) {
-            recentMints[i].blockTimestamp = moment.unix(recentMints[i].blockTimestamp).format("MM/DD/YY HH:mm:ss")
-        }
+    for (let i = 0; i < recentMints.length; i++) {
+      recentMints[i].blockTimestamp = moment.unix(recentMints[i].blockTimestamp).format('MM/DD/YY HH:mm:ss')
+    }
 
-        firstFour = firstFour.data.data.usageEvents
+    firstFour = firstFour.data.data.usageEvents
 
-        for (var i = 0; i < firstFour.length; i++) {
-            firstFour[i].blockTimestamp = moment.unix(firstFour[i].blockTimestamp).format("MM/DD/YY HH:mm:ss")
-        }
+    for (let ii = 0; ii < firstFour.length; ii++) {
+      firstFour[ii].blockTimestamp = moment.unix(firstFour[ii].blockTimestamp).format('MM/DD/YY HH:mm:ss')
+    }
 
-        return {
-            recentMints: recentMints,
-            firstFour: firstFour
-        }
+    return {
+      recentMints: recentMints,
+      firstFour: firstFour
+    }
+  },
 
-    },
-
-
-
-    ticketeerProfile: async(name) => {
-        const ticketeer = await axios.post(
-            getSubGraphURL, {
-                query: `
+  ticketeerProfile: async (name) => {
+    const ticketeer = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     events(orderBy: getDebitedFromSilo, orderDirection: desc, first: 1000,  where:{ticketeerName: "${name}" } ){
                       id
@@ -142,16 +133,16 @@ module.exports = {
                     }
                   } 
                 `
-            }
-        )
+      }
+    )
 
-        return ticketeer.data.data.events
-    },
+    return ticketeer.data.data.events
+  },
 
-    recentEvents: async(number) => {
-        var recentEvents = await axios.post(
-            getSubGraphURL, {
-                query: `
+  recentEvents: async (number) => {
+    let recentEvents = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: ${number}, where: { type: NEW_EVENT }) {
                         type
@@ -168,20 +159,20 @@ module.exports = {
                     }
                 } 
                 `
-            }
-        )
+      }
+    )
 
-        recentEvents = recentEvents.data.data.usageEvents
+    recentEvents = recentEvents.data.data.usageEvents
 
-        recentEvents = recentEvents.filter(e => e.event.ticketeerName != "Demo");
+    recentEvents = recentEvents.filter(e => e.event.ticketeerName !== 'Demo')
 
-        return recentEvents
-    },
+    return recentEvents
+  },
 
-    topEvents: async() => {
-        const topEvents = await axios.post(
-            getSubGraphURL, {
-                query: `
+  topEvents: async () => {
+    const topEvents = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     events(orderBy: getDebitedFromSilo, orderDirection: desc, first: 10) {
                         id
@@ -192,16 +183,16 @@ module.exports = {
                     }
                   }
                 `
-            }
-        )
-        return topEvents.data.data.events
-    },
+      }
+    )
+    return topEvents.data.data.events
+  },
 
-    // map markers function 
-    mapMarkers: async function() {
-        var mapMarkers = await axios.post(
-                getSubGraphURL, {
-                    query: `
+  // map markers function
+  mapMarkers: async function () {
+    let mapMarkers = await axios.post(
+      getSubGraphURL, {
+        query: `
                     {
                         events(orderBy: getDebitedFromSilo, orderDirection: desc, first: 1000, where: {latitude_not: 0 } ) {
                             id
@@ -215,22 +206,22 @@ module.exports = {
                         }
                       }
                         `
-                }
-            )
-            // map events 
+      }
+    )
+    // map events
 
-        mapMarkers = mapMarkers.data.data.events
+    mapMarkers = mapMarkers.data.data.events
 
-        mapMarkers = mapMarkers.filter(e => e.ticketeerName != "Demo");
+    mapMarkers = mapMarkers.filter(e => e.ticketeerName !== 'Demo')
 
-        return mapMarkers
-    },
+    return mapMarkers
+  },
 
-    // map markers function 
-    singleEvent: async function(id) {
-        var thisEventResult = await axios.post(
-            getSubGraphURL, {
-                query: `
+  // map markers function
+  singleEvent: async function (id) {
+    let thisEventResult = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     event(id: "${id}") {
                       id 
@@ -248,17 +239,17 @@ module.exports = {
                     }
                   }
         `
-            }
-        )
+      }
+    )
 
-        thisEventResult = thisEventResult.data.data.event
+    thisEventResult = thisEventResult.data.data.event
 
-        let startDate = moment.unix(thisEventResult.startTime).format("MM/DD/YY | HH:mm")
-        let endDate = moment.unix(thisEventResult.endTime).format("MM/DD/YY | HH:mm")
+    const startDate = moment.unix(thisEventResult.startTime).format('MM/DD/YY | HH:mm')
+    const endDate = moment.unix(thisEventResult.endTime).format('MM/DD/YY | HH:mm')
 
-        let tickets = await axios.post(
-            getSubGraphURL, {
-                query: `
+    let tickets = await axios.post(
+      getSubGraphURL, {
+        query: `
                 {
                     usageEvents(orderBy: blockTimestamp, orderDirection: desc, where: { event: "${id}" }) {
                         type
@@ -267,16 +258,16 @@ module.exports = {
                     }
                 }
         `
-            }
-        )
+      }
+    )
 
-        tickets = tickets.data.data.usageEvents
+    tickets = tickets.data.data.usageEvents
 
-        return {
-            thisEventResult: thisEventResult,
-            tickets: tickets,
-            startDate: startDate,
-            endDate: endDate,
-        }
+    return {
+      thisEventResult: thisEventResult,
+      tickets: tickets,
+      startDate: startDate,
+      endDate: endDate
     }
-};
+  }
+}
