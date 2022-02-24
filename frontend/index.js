@@ -1,3 +1,4 @@
+var path = require('path');
 const express = require('express')
 const app = express()
 const port_running = process.env.PORT || 3000
@@ -10,6 +11,7 @@ app.use(express.static(__dirname + '/public'))
 
 // Set Views
 app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '/views'));
 
 // load some routes //
 var homeRoute = require('./routes/home')
