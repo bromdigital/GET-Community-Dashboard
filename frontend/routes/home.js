@@ -14,6 +14,7 @@ router.get('/', (req, res) => {
       const ticketSales = await subGraph.totalTicketSales()
       const topEvents = await subGraph.topEvents()
       const recentEvents = await subGraph.recentEvents(11)
+      const todayGET = await subGraph.usedGETtoday()
 
       const locals = {
         pageTitle: 'GET Protocol Community - Behind the ticket',
@@ -22,9 +23,9 @@ router.get('/', (req, res) => {
         tokenData: tokenData,
         topEvents: topEvents,
         helpers: helpers,
-        recentEvents: recentEvents
+        recentEvents: recentEvents,
+        todayGET: todayGET
       }
-
       res.render('home', locals)
     } catch (err) {
       console.log(err)

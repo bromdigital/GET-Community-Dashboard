@@ -13,6 +13,7 @@ router.get('/:id', (req, res) => {
   const main = async () => {
     try {
       const eventData = await subGraph.singleEvent(eventID)
+      const todayGET = await subGraph.usedGETtoday()
 
       let eventPast
 
@@ -21,12 +22,13 @@ router.get('/:id', (req, res) => {
       } else {
         eventPast = false
       }
-      console.log(eventData)
+
       const locals = {
         pageTitle: `Event Profile - ${eventData.thisEventResult.eventName}`,
         helpers: helpers,
         eventData: eventData,
-        eventPast: eventPast
+        eventPast: eventPast,
+        todayGET: todayGET
       }
 
       // console.log(locals)

@@ -20,6 +20,10 @@ const usageRoute = require('./routes/getUsed')
 const mapRoute = require('./routes/map')
 const ticketeerRoute = require('./routes/ticketeer')
 
+// include the functions
+const subGraph = require('./inc/subGraph')
+const helpers = require('./inc/helpers')
+
 // the routes //
 app.use('/', homeRoute)
 app.use('/event-profile', eventProfileRoute)
@@ -29,11 +33,23 @@ app.use('/ticketeer', ticketeerRoute)
 
 // 404 page
 app.get('*', (req, res) => {
-  // define the main content statics of the site
-  const locals = {
-    pageTitle: 'Oh no! - Something went wrong.'
+  const main = async () => {
+    try {
+      const todayGET = await subGraph.usedGETtoday()
+
+      const locals = {
+        pageTitle: 'Oh no! - Something went wrong.',
+        todayGET: todayGET,
+        helpers: helpers
+      }
+
+      res.render('404', locals)
+    } catch (err) {
+      console.log(err)
+      res.render('404')
+    }
   }
-  res.render('404', locals)
+  main()
 })
 
 app.listen(portRunning, () => {

@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 const getSubGraphURL = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph'
-const helpers = require('../inc/functions')
+
+const subGraph = require('../inc/subGraph')
+const helpers = require('../inc/helpers')
 
 router.get('/', (req, res) => {
   const main = async () => {
@@ -53,10 +55,14 @@ router.get('/', (req, res) => {
           return filter
         }
       }, [])
+
+      const todayGET = await subGraph.usedGETtoday()
+
       const locals = {
         pageTitle: 'GET Community Dashboard - MAP',
         helpers: helpers,
-        markers: trimDuplicateArray
+        markers: trimDuplicateArray,
+        todayGET: todayGET
       }
       res.render('map', locals)
     } catch (err) {
