@@ -13,6 +13,7 @@ router.get('/:name', (req, res) => {
   const main = async () => {
     try {
       const ticketeerProfile = await subGraph.ticketeerProfile(ticketeerName)
+      const todayGET = await subGraph.usedGETtoday()
 
       const totalGETused = sum(ticketeerProfile.map(prop('getDebitedFromSilo')))
 
@@ -21,6 +22,7 @@ router.get('/:name', (req, res) => {
         ticketeerProfile: ticketeerProfile,
         totalGETused: totalGETused,
         ticketeerName: ticketeerName,
+        todayGET: todayGET,
         helpers: helpers
       }
 

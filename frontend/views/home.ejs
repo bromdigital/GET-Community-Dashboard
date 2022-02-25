@@ -1,21 +1,5 @@
 <%- include ("partials/header") %>
-
-    <div class="content-wrapper">
-
-        <section id="page-title" class="page-title-mini">
-
-            <div class="container clearfix">
-                <h1><strong>GET used today (UTC):</strong>
-                    <%= `${Number(locals.todayUsage.getDebitedFromSilos).toFixed(6)} (${locals.helpers.numberWithCommas(locals.todayUsage.mintCount)} tickets)`  %>
-                </h1>
-            </div>
-
-        </section>
-        <!-- #page-title end -->
-        <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
-
-            <div class="container-fluid py-4">
-
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
                         <div class="card">
@@ -48,7 +32,7 @@
                                             <p class="text-sm mb-0 text-capitalize font-weight-bold">Current Price</p>
                                             <h5 class="font-weight-bolder mb-0">
                                                 <%= `$${locals.tokenData.tokenPriceUSD} | €${locals.tokenData.tokenPriceEUR}` %><br />
-                                                    <span class="text-sm font-weight-bolder"><%= locals.tokenData.priceChange24h %></span>
+                                                    <span class="text-sm font-weight-bolder"><%= locals.tokenData.priceChange24h.toFixed(2) %>%</span>
                                             </h5>
                                         </div>
                                     </div>
@@ -201,7 +185,6 @@
                     </div>
                 </div>
             </div>
-        </main>
     </div>
 
     <%- include ("partials/footer") %>

@@ -125,7 +125,6 @@ router.get('/recent-mint', (req, res) => {
   main()
 })
 
-// Handling request
 router.post('/request', (req, res) => {
   const main = async () => {
     try {
@@ -143,11 +142,13 @@ router.get('/newest-events', (req, res) => {
   const main = async () => {
     try {
       const newEventsResults = await subGraph.recentEvents(30)
+      const todayGET = await subGraph.usedGETtoday()
 
       // define the main content statics of the site
       const locals = {
         pageTitle: 'GET Protocol Community - Newest Events',
         helpers: helpers,
+        todayGET: todayGET,
         newEvents: newEventsResults
       }
 
