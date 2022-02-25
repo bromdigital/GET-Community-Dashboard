@@ -1,44 +1,42 @@
-var express = require('express'),
-    router = express.Router();
-const moment = require('moment');
-const { prop, sum } = require("ramda")
+const express = require('express')
+const router = express.Router()
+const moment = require('moment')
 const today = new Date().getTime()
 
 // include the functions
-const subGraph = require('../inc/subGraph');
-const coinGecko = require('../inc/coinGecko');
-const helpers = require('../inc/helpers');
+const subGraph = require('../inc/subGraph')
+const helpers = require('../inc/helpers')
 
 router.get('/:id', (req, res) => {
-    var eventID = req.params.id;
+  const eventID = req.params.id
 
-    const main = async() => {
-        try {
-            const eventData = await subGraph.singleEvent(eventID)
+  const main = async () => {
+    try {
+      const eventData = await subGraph.singleEvent(eventID)
 
-            if (moment.unix(eventData.thisEventResult.endTime).isBefore(today, 'day')) {
-                var eventPast = true
-            } else {
-                var eventPast = false
-            }
-            console.log(eventData)
-            const locals = {
-                pageTitle: `Event Profile - ${eventData.thisEventResult.eventName}`,
-                helpers: helpers,
-                eventData: eventData,
-                eventPast: eventPast
-            };
+      let eventPast
 
-            //console.log(locals)
+      if (moment.unix(eventData.thisEventResult.endTime).isBefore(today, 'day')) {
+        eventPast = true
+      } else {
+        eventPast = false
+      }
+      console.log(eventData)
+      const locals = {
+        pageTitle: `Event Profile - ${eventData.thisEventResult.eventName}`,
+        helpers: helpers,
+        eventData: eventData,
+        eventPast: eventPast
+      }
 
-            res.render('event-profile', locals);
+      // console.log(locals)
 
-        } catch (err) {
-            console.log(err);
-            res.render('404');
-        }
+      res.render('event-profile', locals)
+    } catch (err) {
+      console.log(err)
+      res.render('404')
     }
-    main()
-
+  }
+  main()
 })
-module.exports = router;
+module.exports = router
