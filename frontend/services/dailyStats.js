@@ -41,7 +41,6 @@ async function getTodayUsage () {
 async function run () {
   const todayGET = await subGraph.usedGETtoday()
   await setTodayUsed(todayGET.getDebitedFromSilos, todayGET.mintCount)
-  console.log(await getTodayUsage())
 }
 
 run().catch((ex) => {
