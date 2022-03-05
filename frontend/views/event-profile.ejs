@@ -5,7 +5,7 @@
 
         <div class="container clearfix">
             <h1>
-                <%= locals.eventData.thisEventResult.eventName%><br/>
+                <%= locals.helpers.truncate(locals.eventData.thisEventResult.eventName, 30)%><br/>
                     <strong> <a href="../ticketeer/<%= locals.eventData.thisEventResult.ticketeerName%>">
                         <%= locals.eventData.thisEventResult.ticketeerName%>
                     </a></strong></h1>
@@ -18,7 +18,7 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <%= locals.eventData.thisEventResult.eventName%>
+                    <%= locals.helpers.truncate(locals.eventData.thisEventResult.eventName, 15) %>
                 </li>
             </ol>
         </div>

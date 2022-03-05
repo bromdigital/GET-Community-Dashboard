@@ -30,7 +30,7 @@ const generateMints = async () => {
                             </p>
                             <h5>
                             <a href="../event-profile/${recentMints.firstFour[i].event.id}">
-                                ${recentMints.firstFour[i].event.eventName}</a><br />
+                                ${helpers.truncate(recentMints.firstFour[i].event.eventName, 20)}</a><br />
                                 <a href="../ticketeer/${recentMints.firstFour[i].event.ticketeerName}">
                                 <span class="text-sm font-weight-bolder">${recentMints.firstFour[i].event.ticketeerName}</span></a>
                             </h5>
@@ -72,7 +72,7 @@ const generateMints = async () => {
             </td>
             <td>
                 <a href="../event-profile/${recentMints.recentMints[ii].event.id}">
-                    ${recentMints.recentMints[ii].event.eventName}
+                    ${helpers.truncate(recentMints.recentMints[ii].event.eventName, 20)}
                 </a>
             </td>
             <td>
