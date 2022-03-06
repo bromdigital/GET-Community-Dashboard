@@ -1,3 +1,7 @@
+# init database files
+.db/token.db
+.db/tickets.db
+
 # Logs
 logs
 *.log
