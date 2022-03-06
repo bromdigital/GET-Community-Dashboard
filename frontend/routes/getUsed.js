@@ -5,10 +5,15 @@ const router = express.Router()
 const subGraph = require('../inc/subGraph')
 const helpers = require('../inc/helpers')
 
+// data from database
+const dailyStats = require('../services/dailyStats')
+
 const generateMints = async () => {
   try {
+    // data from databases
+    const todayGET = await dailyStats.getTodayUsage()
+
     const recentMints = await subGraph.recentMints(30)
-    const todayGET = await subGraph.usedGETtoday()
 
     let html = `<div class="container clearfix">
         <div class="container-fluid py-4">
@@ -25,7 +30,7 @@ const generateMints = async () => {
                             </p>
                             <h5>
                             <a href="../event-profile/${recentMints.firstFour[i].event.id}">
-                                ${recentMints.firstFour[i].event.eventName}</a><br />
+                                ${helpers.truncate(recentMints.firstFour[i].event.eventName, 20)}</a><br />
                                 <a href="../ticketeer/${recentMints.firstFour[i].event.ticketeerName}">
                                 <span class="text-sm font-weight-bolder">${recentMints.firstFour[i].event.ticketeerName}</span></a>
                             </h5>
@@ -67,7 +72,7 @@ const generateMints = async () => {
             </td>
             <td>
                 <a href="../event-profile/${recentMints.recentMints[ii].event.id}">
-                    ${recentMints.recentMints[ii].event.eventName}
+                    ${helpers.truncate(recentMints.recentMints[ii].event.eventName, 20)}
                 </a>
             </td>
             <td>
@@ -95,7 +100,10 @@ const generateMints = async () => {
 
     return {
       html: html,
-      todayGET: todayGET
+      todayGET: {
+        getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
+        mintCount: todayGET[0].ticketsToday
+      }
     }
   } catch (err) {
     return err
@@ -105,14 +113,19 @@ const generateMints = async () => {
 router.get('/recent-mint', (req, res) => {
   const main = async () => {
     try {
+      // data from databases
+      const todayGET = await dailyStats.getTodayUsage()
+
       const recentMints = await subGraph.recentMints(30)
-      const todayGET = await subGraph.usedGETtoday()
 
       // define the main content statics of the site
       const locals = {
         pageTitle: 'GET Protocol Community - Recently Minted',
         helpers: helpers,
-        todayGET: todayGET,
+        todayGET: {
+          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
+          mintCount: todayGET[0].ticketsToday
+        },
         recentMints: recentMints
       }
 
@@ -141,14 +154,19 @@ router.post('/request', (req, res) => {
 router.get('/newest-events', (req, res) => {
   const main = async () => {
     try {
+      // data from databases
+      const todayGET = await dailyStats.getTodayUsage()
+
       const newEventsResults = await subGraph.recentEvents(30)
-      const todayGET = await subGraph.usedGETtoday()
 
       // define the main content statics of the site
       const locals = {
         pageTitle: 'GET Protocol Community - Newest Events',
         helpers: helpers,
-        todayGET: todayGET,
+        todayGET: {
+          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
+          mintCount: todayGET[0].ticketsToday
+        },
         newEvents: newEventsResults
       }
 

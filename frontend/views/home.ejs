@@ -95,7 +95,7 @@
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <a href="event-profile/<%= locals.topEvents[i].id%>">
-                                                                <%= locals.topEvents[i].eventName %>
+                                                                <%= locals.helpers.truncate(locals.topEvents[i].eventName, 30) %>
                                                             </a>
                                                         </div>
                                                     </td>
@@ -162,7 +162,7 @@
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <a href="event-profile/<%= locals.recentEvents[i].event.id%>">
-                                                                <%= locals.recentEvents[i].event.eventName %>
+                                                                <%= locals.helpers.truncate(locals.recentEvents[i].event.eventName, 30) %>
                                                             </a>
                                                         </div>
                                                     </td>
