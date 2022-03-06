@@ -52,7 +52,7 @@
                                     <tr>
                                         <td>
                                             <a href="../event-profile/<%= locals.ticketeerProfile[i].id%>">
-                                                <%= locals.ticketeerProfile[i].eventName %>
+                                                <%= locals.helpers.truncate(locals.ticketeerProfile[i].eventName, 30) %>
                                             </a>
                                         </td>
                                         <td>

@@ -11,14 +11,18 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@databases/sqlite": "^3.0.0",
         "axios": "^0.25.0",
+        "better-sqlite3": "^7.5.0",
+        "bluebird": "^3.7.2",
         "coingecko-api": "^1.0.10",
         "ejs": "^3.1.6",
         "expess": "^0.0.1-security",
         "express": "^4.17.3",
         "express-router": "^0.0.1",
         "moment": "^2.29.1",
-        "ramda": "^0.28.0"
+        "ramda": "^0.28.0",
+        "sqlite3": "^4.2.0"
     },
     "devDependencies": {
         "eslint": "^7.32.0",

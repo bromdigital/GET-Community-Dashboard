@@ -26,17 +26,17 @@
                     <article class="portfolio-item tile">
                         <div class="portfolio-image">
                             <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
-                                <div class="imgTile" style="background-image: url(<%= locals.newEvents[i].event.imageUrl %>);">
+                                <div class="imgTile" style="background-image: url( <%= locals.newEvents[i].event.imageUrl %> );">
                                 </a>
                         </div>
                         <div class="portfolio-desc">
                             <h3>
                                 <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
-                                    <%= locals.newEvents[i].event.eventName %>
+                                    <%= locals.helpers.truncate(locals.newEvents[i].event.eventName, 35) %>
                                 </a>
                             </h3>
                             <a href="../ticketeer/<%= locals.newEvents[i].event.ticketeerName %>">
-                                <span><%= locals.newEvents[i].event.ticketeerName.substring(0, 20) %></span></a>
+                                <span><%= locals.newEvents[i].event.ticketeerName %></span></a>
                         </div>
                     </article>
                     <% } %>
