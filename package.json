@@ -8,7 +8,10 @@
         "start": "nodemon frontend/index.js",
         "check": "eslint ."
     },
-    "author": "",
+    "engines": {
+        "node": "16.4"
+    },
+    "author": "Simon Bromfield",
     "license": "ISC",
     "dependencies": {
         "@databases/sqlite": "^3.0.0",
