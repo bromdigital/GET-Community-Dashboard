@@ -12,7 +12,7 @@ async function prepare () {
   CREATE TABLE IF NOT EXISTS dailyUsage (
     getDebitedFromSilos NUMERIC,
     ticketsToday INT,
-    id INT PRIMARY KEY CHECK (id = 1)
+    id INT
   );
   `)
 }
@@ -24,7 +24,8 @@ async function setTodayUsed (tokenUsage, mintCount) {
   await db.query(sql`
   UPDATE dailyUsage
   SET getDebitedFromSilos = ${tokenUsage},
-      ticketsToday = ${mintCount}
+      ticketsToday = ${mintCount},
+      id = 1
   WHERE
     id = 1;
   `)
@@ -48,6 +49,6 @@ run().catch((ex) => {
   process.exit(1)
 })
 
-setInterval(run, 8000)
+setInterval(run, 100000)
 
 exports.getTodayUsage = getTodayUsage
