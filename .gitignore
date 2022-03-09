@@ -3,9 +3,9 @@
 # .db/tickets.db
 
 # ignore the GO side for heroku
-.backend
-.go-mod
-.go.sum
+backend
+go-mod
+go.sum
 
 # Logs
 logs
