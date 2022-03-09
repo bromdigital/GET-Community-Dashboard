@@ -4,6 +4,37 @@
 	Add all your Custom Styled CSS here for New Styles or
 	Overwriting Default Theme Styles for Better Handling Updates
 -----------------------------------------------------------------*/
+.homeTile{
+    padding: 5vh;
+    text-align: center;
+    background-position: center;
+    background-size: cover;
+}
+
+.homeTile h3{
+    color: #44b490;
+    background-color: #fff;
+    padding: 8px 13px;
+    width: 40%;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.mapTile {
+    background-image: url('../images/mapBg.jpg');
+}
+
+.eventsTile {
+    background-image: url('../images/eventsBg.jpg');
+}
+.botTile {
+    background-image: url('../images/botBg.jpg');
+}
+
+footer {
+    padding-top: 10px;
+    margin-top: 40px;
+}
 
 .getGreen {
     background-color: #44b490;
@@ -17,6 +48,26 @@
     max-height: 30%;
     overflow: scroll;
 }
+
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+  }
+  
+  .modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+  
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
 
 #header-wrap {
     background-color: #1a0645;

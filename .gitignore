@@ -1,6 +1,6 @@
-# init database files
-.db/token.db
-.db/tickets.db
+# # init database files
+# .db/token.db
+# .db/tickets.db
 
 # Logs
 logs
