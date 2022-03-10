@@ -1,8 +1,5 @@
 <%- include ("../partials/header") %>
-<section id="content">
-    <div class="content-wrap">
         <div id="mintContainer">
-            <div class="container clearfix">
                     <div class="container-fluid py-4">
                         <div class="row newMints">
                             <% for(var i = 0; i < locals.recentMints.firstFour.length ; i++) {%>
@@ -21,7 +18,7 @@
                                                             <span class="text-sm font-weight-bolder"><%= locals.recentMints.firstFour[i].event.ticketeerName %></span></a>
                                                     </h5>
                                                 </div>
-                                                <div class="imgTile" style=`background-image: url(" <%= locals.recentMints.firstFour[i].event.imageUrl %> "` );>
+                                                <div class="imgTile" style="background-image: url('<%= locals.recentMints.firstFour[i].event.imageUrl %>' " );>
                                                 </div>
                                                 <h6>
                                                     <%= Number(locals.recentMints.firstFour[i].getDebitedFromSilo).toFixed(6) %> $GET used as fuel.
@@ -81,7 +78,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
             </div>
         <script>
