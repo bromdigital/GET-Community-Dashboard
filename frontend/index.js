@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const portRunning = process.env.PORT || 3000
 
-app.use(express.urlencoded({ extended: true }))
+//app.use(express.urlencoded({ extended: true }))
 
 // Static Files
 const publicPath = path.join(__dirname, '/public')
