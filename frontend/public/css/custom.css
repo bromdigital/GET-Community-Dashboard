@@ -28,7 +28,7 @@
     background-image: url('../images/eventsBg.jpg');
 }
 .botTile {
-    background-image: url('../images/botBg.jpg');
+    background-image: url('../images/bot-bg.jpg');
 }
 
 .dailyusedTitle{
@@ -156,3 +156,16 @@ footer {
 .theadbg {
     background-color: #44b490
 }
+
+#eventImgContainer {
+    perspective: 25px;
+  }
+  
+  #eventImgInner {
+    background-color: white;
+    box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
+    -moz-transition: transform 0.5s;
+    -o-transition: transform 0.5s;
+  }
