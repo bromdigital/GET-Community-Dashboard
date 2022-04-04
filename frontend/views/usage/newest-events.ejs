@@ -22,25 +22,31 @@
 
             <!-- Portfolio Items
             ============================================= -->
-            <div id="portfolio" class="portfolio grid-container clearfix">
+            <div class="row newMints">
                 <% for(var i = 0; i < locals.newEvents.length ; i++) {%>
-
-                    <article class="portfolio-item tile">
-                        <div class="portfolio-image">
-                            <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
-                                <div class="imgTile" style="background-image: url( <%= locals.newEvents[i].event.imageUrl %> );">
-                                </a>
+                    <div class="col-xl-3 col-sm-6 mb-3 mt-3">
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <div class="numbers">
+                                        <!-- <p class="text-sm mb-0">
+                                            
+                                        </p> -->
+                                        <h5>
+                                            <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
+                                                <%= locals.helpers.truncate(locals.newEvents[i].event.eventName, 20) %><br /></a>
+                                            <a href="../ticketeer/<%= locals.newEvents[i].event.ticketeerName %>">
+                                                <span class="text-sm font-weight-bolder"><%= locals.newEvents[i].event.ticketeerName %></span></a>
+                                        </h5>
+                                    </div>
+                                    <div class="imgTile" style="background-image: url('<%= locals.newEvents[i].event.imageUrl %> %>' ");>
+                                    </div>
+                                    <!-- <h6>
+                                    </h6> -->
+                                </div>
+                            </div>
                         </div>
-                        <div class="portfolio-desc">
-                            <h3>
-                                <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
-                                    <%= locals.helpers.truncate(locals.newEvents[i].event.eventName, 35) %>
-                                </a>
-                            </h3>
-                            <a href="../ticketeer/<%= locals.newEvents[i].event.ticketeerName %>">
-                                <span><%= locals.newEvents[i].event.ticketeerName %></span></a>
-                        </div>
-                    </article>
+                    </div>
                     <% } %>
 
             </div>
