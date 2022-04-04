@@ -162,8 +162,8 @@ module.exports = {
       }
     )
 
-    recentEvents = recentEvents.data.data.usageEvents
-
+    recentEvents = await recentEvents.data.data.usageEvents
+    recentEvents = recentEvents.filter(e => e.event.ticketeerName !== 'Demo')
     return recentEvents
   },
 
