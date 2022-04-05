@@ -1,6 +1,6 @@
 # # init database files
-# .db/token.db
-# .db/tickets.db
+.db/token.db
+.db/tickets.db
 .backend
 
 # Logs
