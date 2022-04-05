@@ -17,6 +17,7 @@ const eventProfileRoute = require('./routes/eventProfile')
 const usageRoute = require('./routes/getUsed')
 const mapRoute = require('./routes/map')
 const ticketeerRoute = require('./routes/ticketeer')
+const legionRoute = require('./routes/legion')
 
 // include the functions
 const subGraph = require('./inc/subGraph')
@@ -28,6 +29,7 @@ app.use('/event-profile', eventProfileRoute)
 app.use('/usage', usageRoute)
 app.use('/map', mapRoute)
 app.use('/ticketeer', ticketeerRoute)
+app.use('/legion', legionRoute)
 
 // 404 page
 app.get('*', (req, res) => {

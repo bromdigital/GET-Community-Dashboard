@@ -158,7 +158,8 @@ footer {
 }
 
 #eventImgContainer {
-    perspective: 25px;
+    perspective: 105px;
+
   }
   
   #eventImgInner {
