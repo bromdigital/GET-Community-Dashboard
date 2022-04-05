@@ -15,6 +15,7 @@
     "license": "ISC",
     "dependencies": {
         "@databases/sqlite": "^3.0.0",
+        "apexcharts": "^3.35.0",
         "axios": "^0.25.0",
         "better-sqlite3": "^7.5.0",
         "bluebird": "^3.7.2",
