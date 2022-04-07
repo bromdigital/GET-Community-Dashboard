@@ -115,9 +115,10 @@
                             </li>
                             <li>
                                 <a href="/charts">
-                                    <div class="white-link-text">Chart</div>
+                                    <div class="white-link-text">Charts</div>
                                 </a>
                             </li>
+
                         </ul>
 
                     </nav>
@@ -128,15 +129,4 @@
             </div>
 
         </header>
-        <!-- #header end -->
-        <section id="page-title" class="page-title-mini bottom-border">
-
-            <div class="container clearfix">
-                <h1><strong>GET used today (UTC):</strong>
-                    <div id="mintCount">
-                        <%= `${Number(locals.todayGET.getDebitedFromSilos).toFixed(6)} (${locals.helpers.numberWithCommas(locals.todayGET.mintCount)} tickets)`  %>
-                    </div>
-                </h1>
-            </div>
-        </section>
         <!-- #page-title end -->

@@ -216,6 +216,30 @@ module.exports = {
   },
 
   // map markers function
+  totalMintData: async (days) => {
+    const totalMintData = await axios.post(
+      getSubGraphURL, {
+        query: `
+        {
+          protocolDays(orderBy: day, orderDirection: desc, first: ${days}) {
+            day
+            mintCount
+            scanCount
+            resaleCount
+            checkInCount
+            claimCount
+            invalidateCount
+          }
+        }
+        `
+      }
+    )
+    // map events
+
+    return totalMintData.data.data.protocolDays
+  },
+
+  // map markers function
   singleEvent: async function (id) {
     let thisEventResult = await axios.post(
       getSubGraphURL, {
