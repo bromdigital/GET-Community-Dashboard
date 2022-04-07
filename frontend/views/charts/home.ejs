@@ -1,13 +1,36 @@
 <%- include ("../partials/header-charts") %>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <section id="content">
-        <div class="content-wrap">
-            <div class="container clearfix">
-                 <div class="row">
-                    <h4>Chart for past 90 days</h4>
-                    <div class="col-12 p-2 m-4">
-                        <canvas id="chartGET" width="200px"></canvas>
-                    </div>
+<!-- <div id="page-menu" class="no-sticky">
+    <div id="page-menu-wrap">
+        <div class="container clearfix">
+            <nav>
+                <ul>
+                    <li><a href="#"><div>7 DAY</div></a></li>
+                    <li><a href="#"><div>30 DAY</div></a></li>
+                    <li><a href="#"><div>90 DAY</div></a></li>
+                </ul>
+            </nav>
+        <div id="page-submenu-trigger"><i class="icon-reorder"></i></div>
+    </div>
+</div> -->
+
+</div><!-- #page-menu end -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <section id="content" class="mb-0 m-3 m-0 p-0" style="max-height: 100%;">
+        <div class="content-wrap m-0 p-0">
+            <div class="col_half m-0 p-0">
+                <div id="ticketChart">
+                    
+                </div>
+            </div>
+            <div class="col_half col_last m-0 p-0">
+                <div id="usageChart">
+
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="row m-0 p-0">
+                <div id="mixedChart">
+
                 </div>
             </div>
         </div>
