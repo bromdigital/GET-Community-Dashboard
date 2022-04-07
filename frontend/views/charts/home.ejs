@@ -1,4 +1,4 @@
-<%- include ("../partials/header-charts") %>
+<%- include ("../partials/header") %>
 <!-- <div id="page-menu" class="no-sticky">
     <div id="page-menu-wrap">
         <div class="container clearfix">
@@ -12,28 +12,36 @@
         <div id="page-submenu-trigger"><i class="icon-reorder"></i></div>
     </div>
 </div> -->
+<section id="page-title">
 
-</div><!-- #page-menu end -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <section id="content" class="mb-0 m-3 m-0 p-0" style="max-height: 100%;">
-        <div class="content-wrap m-0 p-0">
+    <div class="container clearfix">
+        <h1>Charts</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/charts">Charts</a></li>
+        </ol>
+    </div>
+
+</section>
+<!-- #page-title end -->
+
+<!-- Content
+    ============================================= -->
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
             <div class="col_half m-0 p-0">
-                <div id="ticketChart">
-                    
-                </div>
+                <div id="ticketChart"></div>
             </div>
             <div class="col_half col_last m-0 p-0">
-                <div id="usageChart">
-
-                </div>
+                <div id="usageChart"></div>
             </div>
             <div class="clear"></div>
             <div class="row m-0 p-0">
-                <div id="mixedChart">
-
-                </div>
+                <div id="mixedChart"></div>
             </div>
         </div>
-    </section>
-    <script src="../js/chartsMain.js" ></script>
+    </div>
+</section>
+
 <%- include ("../partials/footer") %>
