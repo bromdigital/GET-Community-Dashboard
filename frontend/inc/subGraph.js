@@ -229,6 +229,7 @@ module.exports = {
             checkInCount
             claimCount
             invalidateCount
+            getDebitedFromSilos
           }
         }
         `
