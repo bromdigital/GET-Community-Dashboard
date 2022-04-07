@@ -2,14 +2,18 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const portRunning = process.env.PORT || 3000
-
-// Static Files
-const publicPath = path.join(__dirname, '/public')
-app.use(express.static(publicPath))
+const cors = require('cors')
+const bodyParser = require('body-parser')
 
 // Set Views
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))
+
+// Static Files
+const publicPath = path.join(__dirname, '/public')
+app.use(express.static(publicPath))
+app.use(cors())
+app.use(bodyParser.json())
 
 // load some routes //
 const homeRoute = require('./routes/home')
@@ -18,6 +22,7 @@ const usageRoute = require('./routes/getUsed')
 const mapRoute = require('./routes/map')
 const ticketeerRoute = require('./routes/ticketeer')
 const legionRoute = require('./routes/legion')
+const chartsRoute = require('./routes/charts')
 
 // include the functions
 const subGraph = require('./inc/subGraph')
@@ -30,6 +35,7 @@ app.use('/usage', usageRoute)
 app.use('/map', mapRoute)
 app.use('/ticketeer', ticketeerRoute)
 app.use('/legion', legionRoute)
+app.use('/charts', chartsRoute.routes)
 
 // 404 page
 app.get('*', (req, res) => {
