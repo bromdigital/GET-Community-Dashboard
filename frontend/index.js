@@ -15,6 +15,17 @@ app.use(express.static(publicPath))
 app.use(cors())
 app.use(bodyParser.json())
 
+// FORCE HTTPS
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    } else {
+      next()
+    }
+  })
+}
+
 // load some routes //
 const homeRoute = require('./routes/home')
 const eventProfileRoute = require('./routes/eventProfile')
