@@ -23,7 +23,7 @@ const charts = async (req, res, next) => {
 
 const chartData = async (req, res, next) => {
   try {
-    const chartData = await subGraph.totalMintData(90)
+    const chartData = await subGraph.totalMintData(9)
     res.status(200).json(chartData)
   } catch (error) {
     res.status(400).send(error.message)
