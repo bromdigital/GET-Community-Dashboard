@@ -2,16 +2,19 @@ $(document).ready(function() {
   getChartData();
 });
 
-
 const getChartData = async () => {
   await $.ajax({
       url: 'charts/chartData',
       type: 'GET',
       datatype: 'json',
     success: (response) => {
-      if (response !== null) {
+          if (response !== null) {
             var day = response.map(function (elem) {
-              return elem.day
+              const protocolStarted = new Date("June 22, 2021");
+              const thisDate = new Date("June 22, 2021");
+              var daySinceStart = (elem.day - 18800) 
+              thisDate.setDate(protocolStarted.getDate() + daySinceStart);
+              return thisDate.toLocaleDateString('en-UK', { day: 'numeric', month:"short"})
             })
             day = day.reverse()
         
@@ -40,23 +43,25 @@ const getChartData = async () => {
       var ticketOptions = {
         series: [{
           name: "Sold",
-          data: mintCount
+          data: mintCount,
         },
         {
           name: "Scanned",
-          data: scanCount
+          data: scanCount,
         },
         {
           name: "Resold",
           data: resaleCount
         }],
+        
         chart: {
         height: 350,
         type: 'line',
         zoom: {
           enabled: false
         }
-      },
+        },
+        
       dataLabels: {
         enabled: false
       },
@@ -69,7 +74,7 @@ const getChartData = async () => {
       },
       grid: {
         row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          colors: [ '#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
           opacity: 0.5
         },
       },
@@ -78,47 +83,6 @@ const getChartData = async () => {
       }
       };
       
-      var usageOptions = {
-        series: [{
-        name: '$GET used',
-        data: getUsed
-      }],
-        chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded'
-        },
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
-      title: {
-        text: 'GET usage',
-        align: 'left'
-      },
-      xaxis: {
-        categories: day,
-      },
-      yaxis: {
-        title: {
-          text: '$GET used'
-        }
-      },
-      fill: {
-        opacity: 1
-      }
-      };
-
       var ticketsVGEToptions = {
         series: [{
         name: '$GET Used',
@@ -164,11 +128,6 @@ const getChartData = async () => {
 
       var ticketChart = new ApexCharts(document.querySelector("#ticketChart"), ticketOptions);
       ticketChart.render();
-      
-      var usageChart = new ApexCharts(document.querySelector("#usageChart"), usageOptions);
-      usageChart.render();
-      
-
 
     },
     
