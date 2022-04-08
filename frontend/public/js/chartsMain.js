@@ -14,7 +14,7 @@ const getChartData = async () => {
               const thisDate = new Date("June 22, 2021");
               var daySinceStart = (elem.day - 18800) 
               thisDate.setDate(protocolStarted.getDate() + daySinceStart);
-              return thisDate.toLocaleDateString('en-us', { day: 'numeric', month:"short"})
+              return thisDate.toLocaleDateString('en-UK', { day: 'numeric', month:"short"})
             })
             day = day.reverse()
         
@@ -43,23 +43,25 @@ const getChartData = async () => {
       var ticketOptions = {
         series: [{
           name: "Sold",
-          data: mintCount
+          data: mintCount,
         },
         {
           name: "Scanned",
-          data: scanCount
+          data: scanCount,
         },
         {
           name: "Resold",
           data: resaleCount
         }],
+        
         chart: {
         height: 350,
         type: 'line',
         zoom: {
           enabled: false
         }
-      },
+        },
+        
       dataLabels: {
         enabled: false
       },
@@ -72,7 +74,7 @@ const getChartData = async () => {
       },
       grid: {
         row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          colors: [ '#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
           opacity: 0.5
         },
       },
