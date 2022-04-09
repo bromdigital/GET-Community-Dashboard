@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  getChartData();
+  //getChartData(7);
 });
 
-const getChartData = async () => {
+const getChartData = async (numnber) => {
   await $.ajax({
-      url: 'charts/chartData',
+      url: `charts/chartData?id=${numnber}`,
       type: 'GET',
       datatype: 'json',
     success: (response) => {
@@ -37,7 +37,6 @@ const getChartData = async () => {
               return Math.round(elem.getDebitedFromSilos)
             })
             getUsed = getUsed.reverse()
-        
       }
 
       var ticketOptions = {
@@ -130,10 +129,17 @@ const getChartData = async () => {
       ticketChart.render();
 
     },
-    
-    
       error: (err) => {
           console.log(err);
       }
   })
+}
+
+const destroyCharts = async () => {
+  var mixedChart = new ApexCharts(document.querySelector("#mixedChart"), ticketsVGEToptions);
+      mixedChart.destroy();
+
+      var ticketChart = new ApexCharts(document.querySelector("#ticketChart"), ticketOptions);
+      ticketChart.render();
+
 }

@@ -1,7 +1,7 @@
 {
     "name": "get-community-dashboard",
     "version": "3.0.0",
-    "description": "",
+    "description": "Community dashboard - showing the usage of the GET token across tickets, events and ticketeers.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

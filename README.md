@@ -4,6 +4,5 @@
 
 ## Install locally
 
-    > cd frontend
     > npm i
     > npm start
