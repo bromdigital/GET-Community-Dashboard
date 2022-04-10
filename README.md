@@ -1,12 +1,4 @@
 <div id="top"></div>
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -18,11 +10,7 @@
     <a href="https://github.com/simonbromfield/GET_community_dashboard"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://dashboard.get-community.com">View Demo</a>
-    ·
-    <a href="https://github.com/simonbromfield/GET_community_dashboard/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/simonbromfield/GET_community_dashboard/issues">Request Feature</a>
+    <a href="https://dashboard.get-community.com">View Dashboard</a>
   </p>
 </div>
 
@@ -31,8 +19,6 @@
 ## About The Project
 
 [![GET Community Dashboard][./images/screenshot.png]](https://dashboard.get-community.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `simonbromfield`, `GET_community_dashboard`, `simonbromfield`, `linkedin_username`, `GET_community_dashboard`, `A dashboard to illustrate the flow of the GET token, through events, ticketeers and time.`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
