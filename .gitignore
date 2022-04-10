@@ -1,6 +1,5 @@
 # # init database files
-db/token.db
-db/tickets.db
+db
 backend
 
 # Logs

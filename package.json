@@ -28,6 +28,7 @@
         "express-router": "^0.0.1",
         "highcharts": "^10.0.0",
         "moment": "^2.29.1",
+        "nodemon": "^2.0.15",
         "ramda": "^0.28.0",
         "sqlite3": "^4.2.0"
     },
