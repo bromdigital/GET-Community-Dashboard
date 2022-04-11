@@ -4,6 +4,7 @@ const router = express.Router()
 // include the functions
 const subGraph = require('../inc/subGraph')
 const helpers = require('../inc/helpers')
+const trending = require('../inc/trending')
 
 // data from database
 const dailyStats = require('../services/dailyStats')
@@ -112,7 +113,7 @@ router.get('/recent-mint', (req, res) => {
     try {
       // data from databases
       const todayGET = await dailyStats.getTodayUsage()
-
+      const trendingEvent = await trending.trendingID()
       const recentMints = await subGraph.recentMints(30)
 
       // define the main content statics of the site
@@ -123,7 +124,8 @@ router.get('/recent-mint', (req, res) => {
           getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
           mintCount: todayGET[0].ticketsToday
         },
-        recentMints: recentMints
+        recentMints: recentMints,
+        trendingEvent: trendingEvent
       }
 
       res.render('usage/recent-mint', locals)

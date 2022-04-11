@@ -170,3 +170,36 @@ footer {
     -moz-transition: transform 0.5s;
     -o-transition: transform 0.5s;
   }
+
+
+.marquee {
+    height: 30px;
+    width: 100%;
+  
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .marquee div {
+    display: block;
+    width: 200%;
+    height: 30px;
+  
+    position: absolute;
+    overflow: hidden;
+  
+    animation: marquee 25s linear infinite;
+  }
+  
+  .marquee span {
+    float: left;
+    width: 50%;
+  }
+  .marquee span h5{
+      color: crimson;
+  }
+  
+  @keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+  }
