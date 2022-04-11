@@ -120,6 +120,41 @@ module.exports = {
     }
   },
 
+  trending: async (number) => {
+    let recentMints = await axios.post(
+      getSubGraphURL, {
+        query: `
+                {
+                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: ${number - 4}, skip: 4, where: { type: MINT }) {
+                        type
+                        nftIndex
+                        getDebitedFromSilo
+                        blockTimestamp
+                        event {
+                          id
+                          eventName
+                          ticketeerName
+                        }
+                    }
+                } 
+        `
+      }
+    )
+
+    recentMints = recentMints.data.data.usageEvents
+
+    // Remove Your Tikcet Provider
+    recentMints = recentMints.filter(e => e.event.ticketeerName !== 'YourTicketProvider')
+
+    for (let i = 0; i < recentMints.length; i++) {
+      recentMints[i].blockTimestamp = moment.unix(recentMints[i].blockTimestamp).format('MM/DD/YY HH:mm:ss')
+    }
+
+    return {
+      recentMints: recentMints
+    }
+  },
+
   ticketeerProfile: async (name) => {
     const ticketeer = await axios.post(
       getSubGraphURL, {
