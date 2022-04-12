@@ -1,7 +1,7 @@
 # # init database files
 db
 backend
-
+db/tickets.db
 # Logs
 logs
 *.log
