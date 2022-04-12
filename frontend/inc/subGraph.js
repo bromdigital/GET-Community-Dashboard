@@ -103,12 +103,14 @@ module.exports = {
     )
 
     recentMints = recentMints.data.data.usageEvents
+    recentMints = recentMints.filter(e => e.event.ticketeerName !== 'Demo')
 
     for (let i = 0; i < recentMints.length; i++) {
       recentMints[i].blockTimestamp = moment.unix(recentMints[i].blockTimestamp).format('MM/DD/YY HH:mm:ss')
     }
 
     firstFour = firstFour.data.data.usageEvents
+    firstFour = firstFour.filter(e => e.event.ticketeerName !== 'Demo')
 
     for (let ii = 0; ii < firstFour.length; ii++) {
       firstFour[ii].blockTimestamp = moment.unix(firstFour[ii].blockTimestamp).format('MM/DD/YY HH:mm:ss')
@@ -145,6 +147,7 @@ module.exports = {
 
     // Remove Your Tikcet Provider
     recentMints = recentMints.filter(e => e.event.ticketeerName !== 'YourTicketProvider')
+    recentMints = recentMints.filter(e => e.event.ticketeerName !== 'Demo')
 
     for (let i = 0; i < recentMints.length; i++) {
       recentMints[i].blockTimestamp = moment.unix(recentMints[i].blockTimestamp).format('MM/DD/YY HH:mm:ss')
