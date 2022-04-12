@@ -1,0 +1,24 @@
+<%- include ("partials/header") %>
+    <!-- Content Wrapper. Contains page content -->
+    <section id="content">
+
+        <div class="content-wrap">
+
+            <div class="container clearfix">
+
+                <div class="col_full nobottommargin">
+                    <div class="col-lg-12" style="padding: 30px;">
+                        <div class="text-left">
+                            <h2>Recently Active Ticketeers</h2>
+                            <p>Here is a list of the ticketeers that have shown active within a scan of the subGraph</p>
+                            <% for(var i = 0; i < locals.ticketeers.length ; i++) {%>
+                                <h5><a href="/ticketeer/<%= locals.ticketeers[i]%>"><%= locals.ticketeers[i]%></a></h5>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content-wrapper -->
+    <%- include ("partials/footer") %>

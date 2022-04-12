@@ -34,6 +34,7 @@ const mapRoute = require('./routes/map')
 const ticketeerRoute = require('./routes/ticketeer')
 const legionRoute = require('./routes/legion')
 const chartsRoute = require('./routes/charts')
+const activeTicketeers = require('./routes/activeTicketeers')
 
 // include the functions
 const subGraph = require('./inc/subGraph')
@@ -47,6 +48,7 @@ app.use('/map', mapRoute)
 app.use('/ticketeer', ticketeerRoute)
 app.use('/legion', legionRoute)
 app.use('/charts', chartsRoute.routes)
+app.use('/ticketeers', activeTicketeers)
 
 // 404 page
 app.get('*', (req, res) => {
