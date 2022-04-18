@@ -18,7 +18,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![GET Community Dashboard][./images/screenshot.png]](https://dashboard.get-community.com)
+[![GET Community Dashboard](./images/screenshot.png)](https://dashboard.get-community.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -26,6 +26,7 @@
 
 ### Built With
 
+* [NodeJS](https://nodejs.org)
 * [Express](https://expressjs.com/)
 * [Bootstrap](https://getbootstrap.com)
 * [JQuery](https://jquery.com)
@@ -41,36 +42,40 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+You'll need to have certain software & frameworks downloaded. Follow these steps to GET it done:
+* Download the latest version of [NodeJS](https://nodejs.org/en/download/current/), or at least 16.4.0.
+* Open Windows Powershell, your own favourite commandline tool or the Mac equivalent.
+* Perform the following command to update npm and its packages: ```npm install npm@latest -g```
+* Perform the following commands to install Express, Bootstrap & JQuery:
+  * ```npm install express --save```
+  * ```npm install bootstrap```
+  * ```npm install jquery```
+
+### Windows specific
+On Windows, you might need to follow [these steps](https://github.com/nodejs/node-gyp#on-windows) to download node-gyp, Python & some VS packages.
+Here's what worked for me (Jeronemo):
+* Install node-gyp: ```npm install -g node-gyp```
+* Download Python 3.10 [via Microsoft Store](https://www.microsoft.com/en-us/p/python-310/9pjpw5ldxlz5).
+* Download [Visual Studio packages](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) as described in the github nodejs link.
+* Set the MicroSoft Visual Studio version to 2019: ```npm config set msvs_version 2019```.
+  * Do note that this is different from the 2017 mentioned in the article, but during debugging I found this one to be available and not 2017.
 
 ### Installation
 
-1. Clone the repo
+1. If you don't have a github account yet, [sign up](https://github.com/signup) first.
+2. Go to the folder you want the github dashboard (and possible future) projects in, i.e. ```cd C:/Work/Prive```
+3. Clone the Dashboard using the following command:
    ```sh
-   git clone https://github.com/simonbromfield/GET_community_dashboard.git
+   git clone https://github.com/simonbromfield/GET-Community-Dashboard.git
    ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-3. npm start
-   ```
-3. Open http://localhost:3000/ in your browser
+4. Go into the project: ```cd GET-Community-Dashboard```, or full path ```cd C:/Work/Prive/GET-Community-Dashboard```
+5. The project has a ```package-lock.json``` file containing all necessary dependencies. Download them using ```npm install```. 
+   * If this doesn't succeed, you'll have to go on a debugging spree. Start by reading the error message carefully and checking out the specific settings above for hints.
+6. You can now start running the project locally using the command ```npm start```
+7. If successful, you can now visit the dashboard in your browser by going to http://localhost:3000/.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Database integration
-- [ ] Add pagination to lists
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -87,6 +92,16 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [ ] Database integration
+- [ ] Add pagination to lists
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <!-- CONTACT -->
 ## Contact
