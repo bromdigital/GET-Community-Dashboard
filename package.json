@@ -9,7 +9,7 @@
         "check": "eslint ."
     },
     "engines": {
-        "node": "16.4.0"
+        "node": "16"
     },
     "author": "Simon Bromfield",
     "license": "ISC",
