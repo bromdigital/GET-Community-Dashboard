@@ -156,7 +156,7 @@ router.get('/newest-events', (req, res) => {
       // data from databases
       const todayGET = await dailyStats.getTodayUsage()
 
-      const newEventsResults = await subGraph.recentEvents(40)
+      const newEventsResults = await subGraph.recentEvents(100)
 
       // define the main content statics of the site
       const locals = {
