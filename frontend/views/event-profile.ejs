@@ -132,6 +132,30 @@
 
                                 </tbody>
                             </table>
+                            <div id="ticketTable">
+
+                            </div>
+                            <script>
+                                const getChartData = async (number) => {
+                                await $.ajax({
+                                    url: `/event-profile/${}`,
+                                    type: 'GET',
+                                    datatype: 'json',
+                                    success: (response) => {
+                                        if (response !== null) {
+                                        
+                                        }
+                                    }
+                                })
+                                $('#ticketTable').pagination({
+                                    dataSource: locals.eventData.tickets,
+                                    callback: function(data, pagination) {
+                                        // template method of yourself
+                                        var html = template(data);
+                                        dataContainer.html(html);
+                                    }
+                                })
+                            </script>
                         </div>
 
                     </div>
