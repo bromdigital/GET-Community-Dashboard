@@ -202,7 +202,18 @@ module.exports = {
 
     recentEvents = await recentEvents.data.data.usageEvents
     recentEvents = recentEvents.filter(e => e.event.ticketeerName !== 'Demo')
-    return recentEvents
+    recentEvents = recentEvents.filter(e => e.event.ticketeerName !== 'YourTicketProvider')
+
+    const filteredEventsArr = recentEvents.reduce((acc, current) => {
+      const x = acc.find(item => item.event.id === current.event.id)
+      if (!x) {
+        return acc.concat([current])
+      } else {
+        return acc
+      }
+    }, [])
+
+    return filteredEventsArr
   },
 
   topEvents: async () => {
