@@ -203,3 +203,11 @@ footer {
     0% { left: 0; }
     100% { left: -100%; }
   }
+
+
+#gradient
+{
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
