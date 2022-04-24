@@ -183,48 +183,50 @@
                             <div class="card-header pb-0">
                                 <div class="row">
                                     <div class="col-lg-6 col-7">
-                                        <h6>Recent Events</h6>
+                                        <h6>Active Ticketeers</h6>
+                                        <p>
+                                            <span>Here is a list of the ticketeers that have shown active within a scan of the subGraph.</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive">
                                     <table class="table align-items-center mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-secondary text-xxs">Block Timestamp</th>
-                                                <th class="text-secondary text-xxs">Event Name</th>
-                                                <th class="text-secondary text-xxs">Ticketeer</th>
-                                            </tr>
-                                        </thead>
                                         <tbody>
-                                            <% for(var i = 0; i < locals.recentEvents.length; i++) { %>
-                                                <tr>
-                                                    <td>
-                                                        <div class="d-flex px-2 py-1">
-                                                            <h6 class="mb-0 text-sm">
-                                                                <%= locals.helpers.dateR(locals.recentEvents[i].blockTimestamp) %>
-                                                            </h6>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex px-2 py-1">
-                                                            <a href="event-profile/<%= locals.recentEvents[i].event.id%>">
-                                                                <%= locals.helpers.truncate(locals.recentEvents[i].event.eventName, 30) %>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex px-2 py-1">
-                                                            <h6 class="mb-0 text-sm">
-                                                                <a href="../ticketeer/<%= locals.recentEvents[i].event.ticketeerName %>">
-                                                                    <%= locals.recentEvents[i].event.ticketeerName %>
-                                                                </a>
-                                                            </h6>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <% } %>
+                                            <div class="row">
+                                            <% for(var i = 0; i < locals.ticketeers.length ; i++) {%>
+                                                <div class="col-6 activeTicketeersHome">
+                                                    <h6>
+                                                        <a href="/ticketeer/<%= locals.ticketeers[i]%>"><%= locals.ticketeers[i]%></a>
+                                                    </h6>
+                                                </div>
+                                            <% } %>
+                                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-4">
+                            <div class="card-header pb-0">
+                                <div class="row">
+                                    <div class="col-lg-6 col-7">
+                                        <h6>Charts</h6>
+                                        <p>
+                                        <span>Ticket interactions and $GET usage charts.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body px-0 pb-2">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center mb-0">
+                                        <tbody>
+                                            <div class="row">
+                                            <a href="/charts" class="btn btn-secondary">View charts</a>
+                                            </div>
                                         </tbody>
                                     </table>
                                 </div>
