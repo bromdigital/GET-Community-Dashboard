@@ -13,8 +13,12 @@ module.exports = {
       return self.indexOf(value) === index
     }
 
-    const unique = activeTicketeers.filter(onlyUnique)
+    let unique = activeTicketeers.filter(onlyUnique)
 
+    unique = unique.filter(e => e !== 'Jeike Ticketing')
+    unique = unique.filter(e => e !== 'Ontapp')
+
+    // console.log(unique)
     return unique
   }
 }

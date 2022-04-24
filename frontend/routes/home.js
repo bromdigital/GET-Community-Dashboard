@@ -5,6 +5,7 @@ const router = express.Router()
 const subGraph = require('../inc/subGraph')
 const coinGecko = require('../inc/coinGecko')
 const helpers = require('../inc/helpers')
+const activeTicketeers = require('../inc/ticketeer')
 
 // data from database
 const dailyStats = require('../services/dailyStats')
@@ -14,6 +15,7 @@ router.get('/', (req, res) => {
     try {
       // data from databases
       const todayGET = await dailyStats.getTodayUsage()
+      const ticketeers = await activeTicketeers.activeTicketeers()
 
       // data from other sources
       const tokenData = await coinGecko.tokenData()
@@ -30,7 +32,8 @@ router.get('/', (req, res) => {
         todayGET: {
           getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
           mintCount: todayGET[0].ticketsToday
-        }
+        },
+        ticketeers: ticketeers
       }
       res.render('home', locals)
     } catch (err) {
