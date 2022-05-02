@@ -168,13 +168,24 @@ module.exports = {
                       eventName
                       getDebitedFromSilo
                       mintCount
+                      startTime
                     }
                   } 
                 `
       }
     )
 
-    return ticketeer.data.data.events
+    const ticketeerData = ticketeer.data.data.events
+
+    const startDate = ticketeerData.map(function (elem) {
+      const startDate = moment.unix(elem.startTime).format('MM/DD/YY | HH:mm')
+      return startDate
+    })
+
+    return {
+      ticketeerData: ticketeerData,
+      startDate: startDate
+    }
   },
 
   recentEvents: async (number) => {
@@ -264,7 +275,7 @@ module.exports = {
     return mapMarkers
   },
 
-  // map markers function
+  // total mint data
   totalMintData: async (days) => {
     const totalMintData = await axios.post(
       getSubGraphURL, {
@@ -341,5 +352,57 @@ module.exports = {
       startDate: startDate,
       endDate: endDate
     }
+  },
+
+  // calendar data function
+  calendarEvents: async (days) => {
+    const eventData = await axios.post(
+      getSubGraphURL, {
+        query: `
+        {
+          events( first: 1000 ) {
+              id
+              eventName
+              ticketeerName
+              shopUrl
+              imageUrl
+              startTime
+          }
+        }
+        `
+      }
+    )
+
+    // map events
+    const events = eventData.data.data.events
+    const newMarkers = []
+    const len = events.length
+    for (let i = 0; i < len; i++) {
+      if (events[i].ticketeerName === 'Demo') {
+        delete events[i]
+      } else {
+        newMarkers.push({
+          id: events[i].id,
+          name: events[i].eventName,
+          url: events[i].shopUrl,
+          description: events[i].ticketeerName,
+          date: moment.unix(events[i].startTime).format('MMMM/DD/YYYY'),
+          everyYear: false,
+          type: 'event',
+          color: '#63d867'
+        })
+      }
+    }
+    const trimDuplicateArray = newMarkers.reduce((filter, current) => {
+      const dk = filter.find(item => item.id === current.lat)
+      if (!dk) {
+        return filter.concat([current])
+      } else {
+        return filter
+      }
+    }, [])
+    console.log(trimDuplicateArray)
+    return trimDuplicateArray
   }
+
 }

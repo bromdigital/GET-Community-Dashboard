@@ -20,11 +20,11 @@ router.get('/:name', (req, res) => {
 
       const ticketeerProfile = await subGraph.ticketeerProfile(ticketeerName)
 
-      const totalGETused = sum(ticketeerProfile.map(prop('getDebitedFromSilo')))
-
+      const totalGETused = sum(ticketeerProfile.ticketeerData.map(prop('getDebitedFromSilo')))
       const locals = {
         pageTitle: `Ticketeer - ${ticketeerName}`,
-        ticketeerProfile: ticketeerProfile,
+        ticketeerProfile: ticketeerProfile.ticketeerData,
+        startDate: ticketeerProfile.startDate,
         totalGETused: totalGETused,
         ticketeerName: ticketeerName,
         todayGET: {
@@ -37,7 +37,7 @@ router.get('/:name', (req, res) => {
       res.render('ticketeer-profile', locals)
     } catch (err) {
       console.log(err)
-      res.render('404')
+      // res.render('404')
     }
   }
   main()
