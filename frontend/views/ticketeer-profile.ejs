@@ -42,6 +42,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Event Name</th>
+                                    <th scope="col">Date</th>
                                     <th scope="col">Tickets Sold</th>
                                     <th scope="col">GET used</th>
                                 </tr>
@@ -55,6 +56,10 @@
                                                 <%= locals.helpers.truncate(locals.ticketeerProfile[i].eventName, 30) %>
                                             </a>
                                         </td>
+                                        <td>
+                                            <%= locals.startDate[i] %>
+                                        </td>
+                                        
                                         <td>
                                             <%= locals.helpers.numberWithCommas(locals.ticketeerProfile[i].mintCount) %>
                                         </td>
