@@ -1,18 +1,17 @@
 // include the functions
 const subGraph = require('../inc/subGraph')
-const dailyStats = require('../services/dailyStats')
 const helpers = require('../inc/helpers')
 
 const charts = async (req, res, next) => {
   try {
-    const todayGET = await dailyStats.getTodayUsage()
+    const todayGET = await subGraph.usedGETtoday()
 
     const locals = {
       pageTitle: 'GET Community - Charts',
       helpers: helpers,
       todayGET: {
-        getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-        mintCount: todayGET[0].ticketsToday
+        getDebitedFromSilos: todayGET.getDebitedFromSilos,
+        mintCount: todayGET.mintCount
       }
     }
     res.render('charts/home', locals)
