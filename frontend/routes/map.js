@@ -1,18 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
-const getSubGraphURL = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph'
+const getSubGraphURL = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph-deprecated'
 
 const helpers = require('../inc/helpers')
-
-// data from database
-const dailyStats = require('../services/dailyStats')
+const subGraph = require('../inc/subGraph')
 
 router.get('/', (req, res) => {
   const main = async () => {
     try {
-      // data from databases
-      const todayGET = await dailyStats.getTodayUsage()
+      const todayGET = await subGraph.usedGETtoday()
 
       const mapMarkers = await axios.post(
         getSubGraphURL, {
@@ -66,8 +63,8 @@ router.get('/', (req, res) => {
         helpers: helpers,
         markers: trimDuplicateArray,
         todayGET: {
-          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-          mintCount: todayGET[0].ticketsToday
+          getDebitedFromSilos: todayGET.getDebitedFromSilos,
+          mintCount: todayGET.mintCount
         }
       }
       res.render('map', locals)

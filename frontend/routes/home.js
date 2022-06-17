@@ -7,14 +7,11 @@ const coinGecko = require('../inc/coinGecko')
 const helpers = require('../inc/helpers')
 const activeTicketeers = require('../inc/ticketeer')
 
-// data from database
-const dailyStats = require('../services/dailyStats')
-
 router.get('/', (req, res) => {
   const main = async () => {
     try {
       // data from databases
-      const todayGET = await dailyStats.getTodayUsage()
+      const todayGET = await subGraph.usedGETtoday()
       const ticketeers = await activeTicketeers.activeTicketeers()
 
       // data from other sources
@@ -30,8 +27,8 @@ router.get('/', (req, res) => {
         helpers: helpers,
         recentEvents: recentEvents,
         todayGET: {
-          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-          mintCount: todayGET[0].ticketsToday
+          getDebitedFromSilos: todayGET.getDebitedFromSilos,
+          mintCount: todayGET.mintCount
         },
         ticketeers: ticketeers
       }

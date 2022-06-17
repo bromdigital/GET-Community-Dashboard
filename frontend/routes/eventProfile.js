@@ -7,16 +7,12 @@ const today = new Date().getTime()
 const subGraph = require('../inc/subGraph')
 const helpers = require('../inc/helpers')
 
-// data from database
-const dailyStats = require('../services/dailyStats')
-
 router.get('/:id', (req, res) => {
   const eventID = req.params.id
 
   const main = async () => {
     try {
-      // data from databases
-      const todayGET = await dailyStats.getTodayUsage()
+      const todayGET = await subGraph.usedGETtoday()
 
       const eventData = await subGraph.singleEvent(eventID)
 
@@ -34,8 +30,8 @@ router.get('/:id', (req, res) => {
         eventData: eventData,
         eventPast: eventPast,
         todayGET: {
-          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-          mintCount: todayGET[0].ticketsToday
+          getDebitedFromSilos: todayGET.getDebitedFromSilos,
+          mintCount: todayGET.mintCount
         }
       }
 

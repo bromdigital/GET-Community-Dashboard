@@ -1,6 +1,6 @@
 // ========
 const axios = require('axios')
-const getSubGraphURL = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph'
+const getSubGraphURL = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph-deprecated'
 const moment = require('moment')
 
 module.exports = {

@@ -6,13 +6,9 @@ const subGraph = require('../inc/subGraph')
 const helpers = require('../inc/helpers')
 const trending = require('../inc/trending')
 
-// data from database
-const dailyStats = require('../services/dailyStats')
-
 const generateMints = async () => {
   try {
-    // data from databases
-    const todayGET = await dailyStats.getTodayUsage()
+    const todayGET = await subGraph.usedGETtoday()
 
     const recentMints = await subGraph.recentMints(30)
 
@@ -99,8 +95,8 @@ const generateMints = async () => {
     return {
       html: html,
       todayGET: {
-        getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-        mintCount: todayGET[0].ticketsToday
+        getDebitedFromSilos: todayGET.getDebitedFromSilos,
+        mintCount: todayGET.mintCount
       }
     }
   } catch (err) {
@@ -111,8 +107,7 @@ const generateMints = async () => {
 router.get('/recent-mint', (req, res) => {
   const main = async () => {
     try {
-      // data from databases
-      const todayGET = await dailyStats.getTodayUsage()
+      const todayGET = await subGraph.usedGETtoday()
       const trendingEvent = await trending.trendingID()
       const recentMints = await subGraph.recentMints(30)
 
@@ -121,8 +116,8 @@ router.get('/recent-mint', (req, res) => {
         pageTitle: 'GET Protocol Community - Recently Minted',
         helpers: helpers,
         todayGET: {
-          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-          mintCount: todayGET[0].ticketsToday
+          getDebitedFromSilos: todayGET.getDebitedFromSilos,
+          mintCount: todayGET.mintCount
         },
         recentMints: recentMints,
         trendingEvent: trendingEvent
@@ -153,8 +148,7 @@ router.post('/request', (req, res) => {
 router.get('/newest-events', (req, res) => {
   const main = async () => {
     try {
-      // data from databases
-      const todayGET = await dailyStats.getTodayUsage()
+      const todayGET = await subGraph.usedGETtoday()
 
       const newEventsResults = await subGraph.recentEvents(100)
 
@@ -163,8 +157,8 @@ router.get('/newest-events', (req, res) => {
         pageTitle: 'GET Protocol Community - Newest Events',
         helpers: helpers,
         todayGET: {
-          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-          mintCount: todayGET[0].ticketsToday
+          getDebitedFromSilos: todayGET.getDebitedFromSilos,
+          mintCount: todayGET.mintCount
         },
         newEvents: newEventsResults
       }

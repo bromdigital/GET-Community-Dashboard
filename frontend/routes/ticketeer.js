@@ -7,16 +7,12 @@ const { prop, sum } = require('ramda')
 const subGraph = require('../inc/subGraph')
 const helpers = require('../inc/helpers')
 
-// data from database
-const dailyStats = require('../services/dailyStats')
-
 router.get('/:name', (req, res) => {
   const ticketeerName = req.params.name
 
   const main = async () => {
     try {
-      // data from databases
-      const todayGET = await dailyStats.getTodayUsage()
+      const todayGET = await subGraph.usedGETtoday()
 
       const ticketeerProfile = await subGraph.ticketeerProfile(ticketeerName)
 
@@ -28,8 +24,8 @@ router.get('/:name', (req, res) => {
         totalGETused: totalGETused,
         ticketeerName: ticketeerName,
         todayGET: {
-          getDebitedFromSilos: todayGET[0].getDebitedFromSilos,
-          mintCount: todayGET[0].ticketsToday
+          getDebitedFromSilos: todayGET.getDebitedFromSilos,
+          mintCount: todayGET.mintCount
         },
         helpers: helpers
       }
