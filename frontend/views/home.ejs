@@ -143,15 +143,15 @@
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <a href="event-profile/<%= locals.topEvents[i].id%>">
-                                                                <%= locals.helpers.truncate(locals.topEvents[i].eventName, 30) %>
+                                                                <%= locals.helpers.truncate(locals.topEvents[i].name, 30) %>
                                                             </a>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <h6 class="mb-0 text-sm">
-                                                                <a href="../ticketeer/<%= locals.topEvents[i].ticketeerName %>">
-                                                                    <%= locals.topEvents[i].ticketeerName %>
+                                                                <a href="../ticketeer/<%= locals.topEvents[i].integrator.name %>">
+                                                                    <%= locals.topEvents[i].integrator.name %>
                                                                 </a>
                                                             </h6>
                                                         </div>
@@ -159,14 +159,14 @@
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <h6 class="mb-0 text-sm">
-                                                                <%= locals.helpers.numberWithCommas(locals.topEvents[i].mintCount) %>
+                                                                <%= locals.helpers.numberWithCommas(locals.topEvents[i].soldCount) %>
                                                             </h6>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <h6 class="mb-0 text-sm">
-                                                                <%= Number(locals.topEvents[i].getDebitedFromSilo).toFixed(6) %>
+                                                                <%= Number(locals.topEvents[i].reservedFuel).toFixed(6) %>
                                                             </h6>
                                                         </div>
                                                     </td>
@@ -195,10 +195,10 @@
                                     <table class="table align-items-center mb-0">
                                         <tbody>
                                             <div class="row">
-                                            <% for(var i = 0; i < locals.ticketeers.length ; i++) {%>
+                                            <% for(var i = 0; i < locals.ticketeers.integrators.length ; i++) {%>
                                                 <div class="col-6 activeTicketeersHome">
                                                     <h6>
-                                                        <a href="/ticketeer/<%= locals.ticketeers[i]%>"><%= locals.ticketeers[i]%></a>
+                                                        <a href="/ticketeer/<%= locals.ticketeers.integrators[i].name%>"><%= locals.ticketeers.integrators[i].name%></a>
                                                     </h6>
                                                 </div>
                                             <% } %>

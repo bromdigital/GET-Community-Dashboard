@@ -5,14 +5,13 @@ const router = express.Router()
 const subGraph = require('../inc/subGraph')
 const coinGecko = require('../inc/coinGecko')
 const helpers = require('../inc/helpers')
-const activeTicketeers = require('../inc/ticketeer')
 
 router.get('/', (req, res) => {
   const main = async () => {
     try {
       // data from databases
       const todayGET = await subGraph.usedGETtoday()
-      const ticketeers = await activeTicketeers.activeTicketeers()
+      const ticketeers = await subGraph.integrators()
 
       // data from other sources
       const tokenData = await coinGecko.tokenData()

@@ -1,50 +1,38 @@
 // ========
 const axios = require('axios')
 const getSubGraphURL = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph-deprecated'
+const getSubGraphURLV2 = 'https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph'
+
 const moment = require('moment')
 
 module.exports = {
 
   usedGETtoday: async () => {
     const usedGET = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
-            {
+              {
                 protocolDays(orderBy: day, orderDirection: desc, first: 1) {
-                    getDebitedFromSilos
-                    mintCount
-                  }
-                }
+                reservedFuel
+                soldCount
+              }
+            }
             `
       }
     )
-    return usedGET.data.data.protocolDays[0]
-  },
-
-  weekReport: async () => {
-    const result = await axios.post(
-      getSubGraphURL, {
-        query: `
-            {
-                protocolDays(orderBy: day, orderDirection: desc, first: 7) {
-                    getDebitedFromSilos
-                    mintCount
-                  }
-                }
-            `
-      }
-    )
-
-    return result.data.data.protocolDays
+    return {
+      getDebitedFromSilos: usedGET.data.data.protocolDays[0].reservedFuel,
+      mintCount: usedGET.data.data.protocolDays[0].soldCount
+    }
   },
 
   totalTicketSales: async () => {
     const mintCountResults = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
-                {
-                    protocol(id:1) {
-                      mintCount
+                  {
+                    protocol(id: "1") {
+                      soldCount
                     }
                   }
                 `
@@ -52,52 +40,58 @@ module.exports = {
     )
 
     // ticket sales data
-    const priorPolygonTS = parseInt(639813) // Tickets sold prior to Polygon migration
+    const priorPolygonTS = parseInt(640630) // Tickets sold prior to Polygon migration
 
-    const totalTickets = priorPolygonTS + Number(parseInt(mintCountResults.data.data.protocol.mintCount))
+    const totalTickets = priorPolygonTS + Number(parseInt(mintCountResults.data.data.protocol.soldCount))
 
     return totalTickets
   },
 
   recentMints: async (number) => {
     let firstFour = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
-                {
-                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: 4, where: { type: MINT }) {
-                        type
-                        nftIndex
-                        getDebitedFromSilo
-                        blockTimestamp
-                        event {
-                          id
-                          eventName
-                          imageUrl
-                          shopUrl
-                          ticketeerName
-                        }
-                    }
-                } 
+        {
+          usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: 4, , where: { type: SOLD }) {
+              type
+              nftId
+              getUsed
+              blockTimestamp
+              event {
+                id
+                name
+                imageUrl
+                shopUrl
+                integrator{
+                  name
+                }
+              }
+          }
+      }  
         `
       }
     )
 
     let recentMints = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
-                {
-                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: ${number - 4}, skip: 4, where: { type: MINT }) {
-                        type
-                        nftIndex
-                        getDebitedFromSilo
-                        blockTimestamp
-                        event {
-                          id
-                          eventName
-                          ticketeerName
-                        }
+              {
+                usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: ${number - 4}, skip: 4, where: { type: SOLD }) {
+                    type
+                    nftId
+                    getUsed
+                    blockTimestamp
+                    event {
+                      id
+                      name
+                      imageUrl
+                      shopUrl
+                      integrator{
+                        name
+                      }
                     }
-                } 
+                }
+            } 
         `
       }
     )
@@ -190,33 +184,28 @@ module.exports = {
 
   recentEvents: async (number) => {
     let recentEvents = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
                 {
-                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, first: ${number}, where: { type: NEW_EVENT }) {
-                        type
-                        nftIndex
-                        getDebitedFromSilo
-                        blockTimestamp
-                        event {
-                          id
-                          eventName
-                          ticketeerName
-                          imageUrl
-                          shopUrl
-                        }
+                  events(orderBy: blockTimestamp, orderDirection: desc, first: ${number}) {
+                    id
+                    name
+                    imageUrl
+                    integrator{
+                      name
                     }
-                } 
+                  }
+                }
                 `
       }
     )
 
-    recentEvents = await recentEvents.data.data.usageEvents
-    recentEvents = recentEvents.filter(e => e.event.ticketeerName !== 'Demo')
-    recentEvents = recentEvents.filter(e => e.event.ticketeerName !== 'YourTicketProvider')
+    recentEvents = await recentEvents.data.data.events
+    recentEvents = recentEvents.filter(e => e.integrator.name !== 'Demo v1')
+    recentEvents = recentEvents.filter(e => e.integrator.name !== 'YourTicketProvider')
 
     const filteredEventsArr = recentEvents.reduce((acc, current) => {
-      const x = acc.find(item => item.event.id === current.event.id)
+      const x = acc.find(item => item.id === current.id)
       if (!x) {
         return acc.concat([current])
       } else {
@@ -229,17 +218,18 @@ module.exports = {
 
   topEvents: async () => {
     const topEvents = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
                 {
-                    events(orderBy: getDebitedFromSilo, orderDirection: desc, first: 10) {
-                        id
-                        eventName
-                        mintCount
-                        ticketeerName
-                        getDebitedFromSilo
+                  events(orderBy: reservedFuel, orderDirection: desc, first: 10) {
+                    name
+                    soldCount
+                    integrator{
+                      name
                     }
+                    reservedFuel
                   }
+                }
                 `
       }
     )
@@ -295,7 +285,6 @@ module.exports = {
         `
       }
     )
-    // map events
 
     return totalMintData.data.data.protocolDays
   },
@@ -303,24 +292,26 @@ module.exports = {
   // map markers function
   singleEvent: async function (id) {
     let thisEventResult = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
-                {
-                    event(id: "${id}") {
-                      id 
-                      eventName
-                      mintCount
-                      scanCount
-                      claimCount
-                      imageUrl
-                      startTime
-                      endTime
-                      ticketeerName
-                      getDebitedFromSilo
-                      averageGetPerMint
-                      shopUrl
-                    }
-                  }
+        {
+          event(id: "${id}") {
+            id 
+            name
+            soldCount
+            scannedCount
+            claimedCount
+            imageUrl
+            startTime
+            endTime
+            integrator{
+              name
+            }
+            reservedFuel
+            averageReservedPerTicket
+            shopUrl
+          }
+        }
         `
       }
     )
@@ -331,20 +322,24 @@ module.exports = {
     const endDate = moment.unix(thisEventResult.endTime).format('MM/DD/YY | HH:mm')
 
     let tickets = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
-                {
-                    usageEvents(orderBy: blockTimestamp, orderDirection: desc, where: { event: "${id}" }) {
-                        type
-                        nftIndex
-                        getDebitedFromSilo
-                    }
-                }
+        {
+          event(id: "0x454871134a6d4fbcea9de0f472556b44996e4dcb") {
+            tickets{
+              id
+              usageEvents{
+                getUsed
+                type
+              }
+            }
+          }
+        }
         `
       }
     )
 
-    tickets = tickets.data.data.usageEvents
+    tickets = tickets.data.data.event
 
     return {
       thisEventResult: thisEventResult,
@@ -354,55 +349,25 @@ module.exports = {
     }
   },
 
-  // calendar data function
-  calendarEvents: async (days) => {
-    const eventData = await axios.post(
-      getSubGraphURL, {
+  // map markers function
+  integrators: async function (id) {
+    let integrators = await axios.post(
+      getSubGraphURLV2, {
         query: `
         {
-          events( first: 1000 ) {
-              id
-              eventName
-              ticketeerName
-              shopUrl
-              imageUrl
-              startTime
+          integrators(where:{ isBillingEnabled: true }) {
+            name
           }
         }
         `
       }
     )
 
-    // map events
-    const events = eventData.data.data.events
-    const newMarkers = []
-    const len = events.length
-    for (let i = 0; i < len; i++) {
-      if (events[i].ticketeerName === 'Demo') {
-        delete events[i]
-      } else {
-        newMarkers.push({
-          id: events[i].id,
-          name: events[i].eventName,
-          url: events[i].shopUrl,
-          description: events[i].ticketeerName,
-          date: moment.unix(events[i].startTime).format('MMMM/DD/YYYY'),
-          everyYear: false,
-          type: 'event',
-          color: '#63d867'
-        })
-      }
+    integrators = integrators.data.data.integrators
+
+    return {
+      integrators: integrators
     }
-    const trimDuplicateArray = newMarkers.reduce((filter, current) => {
-      const dk = filter.find(item => item.id === current.lat)
-      if (!dk) {
-        return filter.concat([current])
-      } else {
-        return filter
-      }
-    }, [])
-    console.log(trimDuplicateArray)
-    return trimDuplicateArray
   }
 
 }

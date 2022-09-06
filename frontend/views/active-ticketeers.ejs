@@ -11,8 +11,8 @@
                         <div class="text-left">
                             <h2>Recently Active Ticketeers</h2>
                             <p>Here is a list of the ticketeers that have shown active within a scan of the subGraph.</p>
-                            <% for(var i = 0; i < locals.ticketeers.length ; i++) {%>
-                                <h5><a href="/ticketeer/<%= locals.ticketeers[i]%>"><%= locals.ticketeers[i]%></a></h5>
+                            <% for(var i = 0; i < locals.ticketeers.integrators.length ; i++) {%>
+                                <h5><a href="/ticketeer/<%= locals.ticketeers.integrators[i].name%>"><%= locals.ticketeers.integrators[i].name%></a></h5>
                             <% } %>
                         </div>
                     </div>

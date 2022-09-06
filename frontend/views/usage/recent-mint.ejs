@@ -1,11 +1,4 @@
 <%- include ("../partials/header") %>
-<div class="marquee">
-    <div>
-      <span><h5>TRENDING:<a href="../event-profile/<%= locals.trendingEvent.thisEventResult.id %>"> <%= locals.helpers.truncate(locals.trendingEvent.thisEventResult.eventName, 30)%> by <%= locals.trendingEvent.thisEventResult.ticketeerName%>.</a></h5></span>
-      <span><h5>TRENDING:<a href="../event-profile/<%= locals.trendingEvent.thisEventResult.id %>"> <%= locals.helpers.truncate(locals.trendingEvent.thisEventResult.eventName, 30)%> by <%= locals.trendingEvent.thisEventResult.ticketeerName%>.</a></h5></span>
-    </div>
-  </div>
-
         <div id="mintContainer">
                     <div class="container-fluid py-4">
                         <div class="row newMints">
@@ -20,15 +13,15 @@
                                                     </p>
                                                     <h5>
                                                         <a href="../event-profile/<%= locals.recentMints.firstFour[i].event.id %>">
-                                                            <%= locals.helpers.truncate(locals.recentMints.firstFour[i].event.eventName, 20) %><br /></a>
-                                                        <a href="../ticketeer/<%= locals.recentMints.firstFour[i].event.ticketeerName %>">
-                                                            <span class="text-sm font-weight-bolder"><%= locals.recentMints.firstFour[i].event.ticketeerName %></span></a>
+                                                            <%= locals.helpers.truncate(locals.recentMints.firstFour[i].event.name, 20) %><br /></a>
+                                                        <a href="../ticketeer/<%= locals.recentMints.firstFour[i].event.integrator.name %>">
+                                                            <span class="text-sm font-weight-bolder"><%= locals.recentMints.firstFour[i].event.integrator.name %></span></a>
                                                     </h5>
                                                 </div>
                                                 <div class="imgTile" style="background-image: url('<%= locals.recentMints.firstFour[i].event.imageUrl %>' " );>
                                                 </div>
                                                 <h6>
-                                                    <%= Number(locals.recentMints.firstFour[i].getDebitedFromSilo).toFixed(6) %> $GET used as fuel.
+                                                    <%= Number(locals.recentMints.firstFour[i].getUsed).toFixed(6) %> $GET used as fuel.
                                                 </h6>
                                             </div>
                                         </div>
@@ -55,27 +48,27 @@
                                         <% for(var i = 0; i < locals.recentMints.recentMints.length ; i++) {%>
                                             <tr>
                                                 <td>
-                                                    <%= locals.recentMints.recentMints[i].nftIndex %>
+                                                    <%= locals.recentMints.recentMints[i].nftId %>
                                                 </td>
                                                 <td>
                                                     <a href="../event-profile/<%= locals.recentMints.recentMints[i].event.id %>">
-                                                        <%= locals.helpers.truncate(locals.recentMints.recentMints[i].event.eventName, 20)%>
+                                                        <%= locals.helpers.truncate(locals.recentMints.recentMints[i].event.name, 20)%>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="../ticketeer/<%= locals.recentMints.recentMints[i].event.ticketeerName %>">
-                                                        <%= locals.recentMints.recentMints[i].event.ticketeerName %>
+                                                    <a href="../ticketeer/<%= locals.recentMints.recentMints[i].event.integrator.name %>">
+                                                        <%= locals.recentMints.recentMints[i].event.integrator.name %>
                                                     </a>
                                                 </td>
 
                                                 <td>
-                                                    <%= locals.recentMints.recentMints[i].getDebitedFromSilo %>
+                                                    <%= locals.recentMints.recentMints[i].getUsed %>
                                                 </td>
                                                 <td>
                                                     <%= locals.recentMints.recentMints[i].blockTimestamp %>
                                                 </td>
                                                 <td>
-                                                    <a href="https://explorer.get-protocol.io/ticket/<%= locals.recentMints.recentMints[i].nftIndex %>" target="_blank">View Ticket</a>
+                                                    <a href="https://explorer.get-protocol.io/ticket/<%= locals.recentMints.recentMints[i].nftId %>" target="_blank">View Ticket</a>
                                                 </td>
                                             </tr>
                                             <% } %>

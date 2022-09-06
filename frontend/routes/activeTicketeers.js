@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 
 // include the functions
-const activeTicketeers = require('../inc/ticketeer')
 const helpers = require('../inc/helpers')
 const subGraph = require('../inc/subGraph')
 
@@ -10,8 +9,8 @@ router.get('/', (req, res) => {
   const main = async () => {
     try {
       const todayGET = await subGraph.usedGETtoday()
-      const ticketeers = await activeTicketeers.activeTicketeers()
-
+      const ticketeers = await subGraph.integrators()
+      console.log(ticketeers)
       // define the main content statics of the site
       const locals = {
         pageTitle: 'GET Protocol Community - Active Ticketeers',

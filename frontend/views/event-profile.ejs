@@ -5,20 +5,20 @@
 
         <div class="container clearfix">
             <h1>
-                <%= locals.helpers.truncate(locals.eventData.thisEventResult.eventName, 30)%><br/>
-                    <strong> <a href="../ticketeer/<%= locals.eventData.thisEventResult.ticketeerName%>">
-                        <%= locals.eventData.thisEventResult.ticketeerName%>
+                <%= locals.helpers.truncate(locals.eventData.thisEventResult.name, 30)%><br/>
+                    <strong> <a href="../ticketeer/<%= locals.eventData.thisEventResult.integrator.name%>">
+                        <%= locals.eventData.thisEventResult.integrator.name%>
                     </a></strong></h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item"><a href="/usage/newest-events">Events</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="../ticketeer/<%= locals.eventData.thisEventResult.ticketeerName%>">
-                        <%= locals.eventData.thisEventResult.ticketeerName%>
+                    <a href="../ticketeer/<%= locals.eventData.thisEventResult.integrator.name%>">
+                        <%= locals.eventData.thisEventResult.integrator.name%>
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <%= locals.helpers.truncate(locals.eventData.thisEventResult.eventName, 15) %>
+                    <%= locals.helpers.truncate(locals.eventData.thisEventResult.name, 15) %>
                 </li>
             </ol>
         </div>
@@ -56,11 +56,11 @@
                                 <ul class="iconlist nobottommargin">
                                     <li><strong>GET used</strong></li>
                                     <li>
-                                        <%= Number(locals.eventData.thisEventResult.getDebitedFromSilo).toFixed(6) %>
+                                        <%= Number(locals.eventData.thisEventResult.reservedFuel).toFixed(6) %>
                                     </li>
                                     <li><strong>Mint count</strong></li>
                                     <li>
-                                        <%= locals.helpers.numberWithCommas(locals.eventData.thisEventResult.mintCount) %>
+                                        <%= locals.helpers.numberWithCommas(locals.eventData.thisEventResult.soldCount) %>
                                     </li>
                                 </ul>
                             </div>
@@ -109,27 +109,21 @@
                                 <tbody>
 
                                     <% for(var i = 0; i < locals.eventData.tickets.length ; i++) {%>
-                                        <% if(locals.eventData.tickets[i].type == "NEW_EVENT"){ %>
-                                            <!-- --- -->
-                                            <% }else{ %>
-
                                                 <tr>
                                                     <td>
-                                                        <%= locals.eventData.tickets[i].nftIndex %>
+                                                        <%= locals.eventData.tickets[i].d %>
                                                     </td>
                                                     <td>
-                                                        <%= locals.eventData.tickets[i].type %>
+                                                        <%= locals.eventData.tickets[i].usageEvents.type %>
                                                     </td>
                                                     <td>
-                                                        <%= locals.eventData.tickets[i].getDebitedFromSilo %>
+                                                        <%= locals.eventData.tickets[i].usageEvents.getUsed %>
                                                     </td>
                                                     <td>
-                                                        <a href="https://explorer.get-protocol.io/ticket/<%= locals.eventData.tickets[i].nftIndex %>" target="_blank" class="btn btn-sm btn-outline-primary">View Ticket</a>
+                                                        <a href="https://explorer.get-protocol.io/ticket/<%= locals.eventData.tickets[i].nftId %>" target="_blank" class="btn btn-sm btn-outline-primary">View Ticket</a>
                                                     </td>
                                                 </tr>
                                                 <% } %>
-                                                    <% } %>
-
                                 </tbody>
                             </table>
                             <div id="ticketTable">
@@ -148,7 +142,7 @@
                                     }
                                 })
                                 $('#ticketTable').pagination({
-                                    dataSource: locals.eventData.tickets,
+                                    dataSource: locals.tickets,
                                     callback: function(data, pagination) {
                                         // template method of yourself
                                         var html = template(data);
