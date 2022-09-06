@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
       res.render('home', locals)
     } catch (err) {
       console.log(err)
-      //res.render('404')
+      res.render('404')
     }
   }
   main()
