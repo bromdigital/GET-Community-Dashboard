@@ -33,13 +33,13 @@
                                             
                                         </p> -->
                                         <h5>
-                                            <a href="../event-profile/<%= locals.newEvents[i].event.id %>">
-                                                <%= locals.helpers.truncate(locals.newEvents[i].event.eventName, 20) %><br /></a>
-                                            <a href="../ticketeer/<%= locals.newEvents[i].event.ticketeerName %>">
-                                                <span class="text-sm font-weight-bolder"><%= locals.newEvents[i].event.ticketeerName %></span></a>
+                                            <a href="../event-profile/<%= locals.newEvents[i].id %>">
+                                                <%= locals.helpers.truncate(locals.newEvents[i].name, 20) %><br /></a>
+                                            <a href="../ticketeer/<%= locals.newEvents[i].integrator.name %>">
+                                                <span class="text-sm font-weight-bolder"><%= locals.newEvents[i].integrator.name %></span></a>
                                         </h5>
                                     </div>
-                                            <div class="imgTile" style="background-image: url('<%= locals.newEvents[i].event.imageUrl %> %>' ");>
+                                            <div class="imgTile" style="background-image: url('<%= locals.newEvents[i].imageUrl %> %>' ");>
                                     </div>
                                     <!-- <h6>
                                     </h6> -->

@@ -27,15 +27,15 @@ const generateMints = async () => {
                                 </p>
                                 <h5>
                                 <a href="../event-profile/${recentMints.firstFour[i].event.id}">
-                                ${helpers.truncate(recentMints.firstFour[i].event.eventName, 20)}<br /></a>
-                                <a href="../ticketeer/${recentMints.firstFour[i].event.ticketeerName}">
-                                <span class="text-sm font-weight-bolder">${recentMints.firstFour[i].event.ticketeerName}</span></a>
+                                ${helpers.truncate(recentMints.firstFour[i].event.name, 20)}<br /></a>
+                                <a href="../ticketeer/${recentMints.firstFour[i].event.integrator.name}">
+                                <span class="text-sm font-weight-bolder">${recentMints.firstFour[i].event.integrator.name}</span></a>
                                 </h5>
                                 </div>
                                 <div class="imgTile" style="background-image: url(' ${recentMints.firstFour[i].event.imageUrl}'" );>
                         </div>
                         <h6>
-                            ${Number(recentMints.firstFour[i].getDebitedFromSilo).toFixed(6)} $GET used as fuel.
+                            ${Number(recentMints.firstFour[i].getUsed).toFixed(6)} $GET used as fuel.
                         </h6>
                     </div>
                 </div>
@@ -63,27 +63,27 @@ const generateMints = async () => {
     for (let ii = 0; ii < recentMints.recentMints.length; ii++) {
       html += `<tr>
             <td>
-                ${recentMints.recentMints[ii].nftIndex}
+                ${recentMints.recentMints[ii].nftId}
             </td>
             <td>
                 <a href="../event-profile/${recentMints.recentMints[ii].event.id}">
-                    ${helpers.truncate(recentMints.recentMints[ii].event.eventName, 20)}
+                    ${helpers.truncate(recentMints.recentMints[ii].event.name, 20)}
                 </a>
             </td>
             <td>
-                <a href="../ticketeer/${recentMints.recentMints[ii].event.ticketeerName}">
-                    ${recentMints.recentMints[ii].event.ticketeerName}
+                <a href="../ticketeer/${recentMints.recentMints[ii].event.integrator.name}">
+                    ${recentMints.recentMints[ii].event.integrator.name}
                 </a>
             </td>
 
             <td>
-                ${recentMints.recentMints[ii].getDebitedFromSilo}
+                ${recentMints.recentMints[ii].getUsed}
             </td>
             <td>
                 ${recentMints.recentMints[ii].blockTimestamp}
             </td>
             <td>
-                <a href="https://explorer.get-protocol.io/ticket/${recentMints.recentMints[ii].nftIndex}" target="_blank">View Ticket</a>
+                <a href="https://explorer.get-protocol.io/ticket/${recentMints.recentMints[ii].nftId}" target="_blank">View Ticket</a>
             </td>
         </tr>`
     }
@@ -156,10 +156,7 @@ router.get('/newest-events', (req, res) => {
       const locals = {
         pageTitle: 'GET Protocol Community - Newest Events',
         helpers: helpers,
-        todayGET: {
-          getDebitedFromSilos: todayGET.getDebitedFromSilos,
-          mintCount: todayGET.mintCount
-        },
+        todayGET: todayGET,
         newEvents: newEventsResults
       }
 

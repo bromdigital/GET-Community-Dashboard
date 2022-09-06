@@ -55,10 +55,15 @@ app.get('*', (req, res) => {
   const main = async () => {
     try {
       const todayGET = await subGraph.usedGETtoday()
+      const ticketSales = await subGraph.totalTicketSales()
 
       const locals = {
         pageTitle: 'Oh no! - Something went wrong.',
-        todayGET: todayGET,
+        todayGET: {
+          getDebitedFromSilos: todayGET.getDebitedFromSilos,
+          mintCount: todayGET.mintCount
+        },
+        ticketSales: ticketSales,
         helpers: helpers
       }
 
