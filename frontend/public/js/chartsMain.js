@@ -18,23 +18,23 @@ const getChartData = async (number) => {
             })
             day = day.reverse()
         
-            var mintCount = response.map(function (elem) {
-              return elem.mintCount
+            var soldCount = response.map(function (elem) {
+              return elem.soldCount
             })
-            mintCount = mintCount.reverse()
+            soldCount = soldCount.reverse()
         
-            var scanCount = response.map(function (elem) {
-              return elem.scanCount
+            var scannedCount = response.map(function (elem) {
+              return elem.scannedCount
             })
-            scanCount = scanCount.reverse()
+            scannedCount = scannedCount.reverse()
         
-            var resaleCount = response.map(function (elem) {
-              return elem.resaleCount
+            var resoldCount = response.map(function (elem) {
+              return elem.resoldCount
             })
-            resaleCount = resaleCount.reverse()    
+            resoldCount = resoldCount.reverse()    
         
             var getUsed = response.map(function (elem) {
-              return Math.round(elem.getDebitedFromSilos)
+              return Math.round(elem.reservedFuel)
             })
             getUsed = getUsed.reverse()
       }
@@ -42,15 +42,15 @@ const getChartData = async (number) => {
       var ticketOptions = {
         series: [{
           name: "Sold",
-          data: mintCount,
+          data: soldCount,
         },
         {
           name: "Scanned",
-          data: scanCount,
+          data: scannedCount,
         },
         {
           name: "Resold",
-          data: resaleCount
+          data: resoldCount
         }],
         
         chart: {
@@ -90,7 +90,7 @@ const getChartData = async (number) => {
       }, {
         name: 'Tickets Sold',
         type: 'line',
-        data: mintCount
+        data: soldCount
       }],
         chart: {
         height: 350,

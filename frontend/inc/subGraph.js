@@ -268,20 +268,21 @@ module.exports = {
   // total mint data
   totalMintData: async (days) => {
     const totalMintData = await axios.post(
-      getSubGraphURL, {
+      getSubGraphURLV2, {
         query: `
         {
           protocolDays(orderBy: day, orderDirection: desc, first: ${days}) {
             day
-            mintCount
-            scanCount
-            resaleCount
-            checkInCount
-            claimCount
-            invalidateCount
-            getDebitedFromSilos
+            soldCount
+            scannedCount
+            resoldCount
+            checkedInCount
+            claimedCount
+            invalidatedCount
+            reservedFuel
           }
-        }
+        } 
+
         `
       }
     )
@@ -339,7 +340,7 @@ module.exports = {
       }
     )
 
-    tickets = tickets.data.data.event
+    tickets = tickets.data.data.event.tickets
 
     return {
       thisEventResult: thisEventResult,
