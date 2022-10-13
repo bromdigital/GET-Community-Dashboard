@@ -100,8 +100,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Ticket Number</th>
-                                        <th scope="col">Interaction Event</th>
+                                        <th scope="col">Ticket ID</th>
                                         <th scope="col">$GET used</th>
                                         <th scope="col">NFT Explorer</th>
                                     </tr>
@@ -114,13 +113,13 @@
                                                         <%= locals.eventData.tickets[i].id %>
                                                     </td>
                                                     <td>
-                                                        <%= locals.eventData.tickets[i].usageEvents.type %>
+                                                        <%= locals.eventData.tickets[i].usageEvents[0].type %>
                                                     </td>
                                                     <td>
-                                                        <%= locals.eventData.tickets[i].usageEvents.getUsed %>
+                                                        <%= locals.eventData.tickets[i].usageEvents[0].getUsed %>
                                                     </td>
                                                     <td>
-                                                        <a href="https://explorer.get-protocol.io/ticket/<%= locals.eventData.tickets[i].nftId %>" target="_blank" class="btn btn-sm btn-outline-primary">View Ticket</a>
+                                                        <a href="https://explorer.get-protocol.io/ticket/<%= locals.eventData.tickets[i].id %>" target="_blank" class="btn btn-sm btn-outline-primary">View Ticket</a>
                                                     </td>
                                                 </tr>
                                                 <% } %>
